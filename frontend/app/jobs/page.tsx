@@ -61,7 +61,7 @@ export default function JobsPage() {
 
       return matchesSearch && matchesDepartment && matchesType && matchesLocation
     })
-  }, [searchQuery, selectedDepartment, selectedType, selectedLocation])
+  }, [jobs, searchQuery, selectedDepartment, selectedType, selectedLocation])
 
   const clearFilters = () => {
     setSearchQuery("")

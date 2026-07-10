@@ -1,6 +1,6 @@
 import Link from "next/link"
 import Image from "next/image"
-import { Mail, Phone, MapPin, Linkedin, Twitter, Facebook, MessageCircle } from "lucide-react"
+import { Mail, Phone, MapPin, Linkedin, Instagram, Facebook, MessageCircle } from "lucide-react"
 
 const navigation = {
   company: [
@@ -25,9 +25,9 @@ const navigation = {
 }
 
 const socialLinks = [
-  { name: "LinkedIn", href: "#", icon: Linkedin },
-  { name: "Twitter", href: "#", icon: Twitter },
-  { name: "Facebook", href: "#", icon: Facebook },
+  { name: "LinkedIn", href: "https://www.linkedin.com/in/amit-tiwari-645347104?utm_source=share_via&utm_content=profile&utm_medium=member_android", icon: Linkedin },
+  { name: "Instagram", href: "https://www.instagram.com/acsjobs2024?igsh=cWkyaWJrOWs5NXls", icon: Instagram },
+  { name: "Facebook", href: "https://www.facebook.com/share/14fMqdZ5rse/", icon: Facebook },
   { name: "WhatsApp", href: "https://wa.me/919711189713", icon: MessageCircle },
 ]
 

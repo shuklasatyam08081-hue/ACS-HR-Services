@@ -1,7 +1,7 @@
 import { Metadata } from "next"
 import { Card, CardContent } from "@/components/ui/card"
 import { ContactForm } from "@/components/contact-form"
-import { Mail, Phone, MapPin, Clock, Linkedin, Twitter, Facebook, MessageCircle } from "lucide-react"
+import { Mail, Phone, MapPin, Clock, Linkedin, Instagram, Facebook, MessageCircle } from "lucide-react"
 
 export const metadata: Metadata = {
   title: "Contact Us | ACS HR Services - Anshuman Consultancy",
@@ -33,9 +33,9 @@ const contactInfo = [
 ]
 
 const socialLinks = [
-  { name: "LinkedIn", href: "#", icon: Linkedin },
-  { name: "Twitter", href: "#", icon: Twitter },
-  { name: "Facebook", href: "#", icon: Facebook },
+  { name: "LinkedIn", href: "https://www.linkedin.com/in/amit-tiwari-645347104?utm_source=share_via&utm_content=profile&utm_medium=member_android", icon: Linkedin },
+  { name: "Instagram", href: "https://www.instagram.com/acsjobs2024?igsh=cWkyaWJrOWs5NXls", icon: Instagram },
+  { name: "Facebook", href: "https://www.facebook.com/share/14fMqdZ5rse/", icon: Facebook },
   { name: "WhatsApp", href: "https://wa.me/919711189713", icon: MessageCircle },
 ]
 

@@ -6,7 +6,18 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Loader2, Plus, Pencil, Trash2 } from "lucide-react"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { Loader2, Plus, Pencil, Trash2, CheckCircle2, XCircle } from "lucide-react"
+
+const JOB_TYPES = ["Full-time", "Part-time", "Contract", "Internship"]
+const DEPARTMENTS = ["Human Resources", "Recruitment", "Payroll", "Compliance", "Learning & Development"]
+const LOCATIONS = ["Mumbai, Maharashtra", "Delhi NCR", "Bangalore, Karnataka", "Pune, Maharashtra", "Hyderabad, Telangana", "Remote"]
 
 export default function AdminJobsPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -14,6 +25,8 @@ export default function AdminJobsPage() {
   
   const [jobs, setJobs] = useState<any[]>([])
   const [loading, setLoading] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState<"success" | "error" | null>(null)
   const [view, setView] = useState<"list" | "form">("list")
   const [editingJobId, setEditingJobId] = useState<string | null>(null)
 
@@ -106,6 +119,8 @@ export default function AdminJobsPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setSubmitting(true)
+    setSubmitStatus(null)
     const payload = {
       ...formData,
       requirements: formData.requirements.split("\n").filter(r => r.trim() !== ""),
@@ -113,24 +128,35 @@ export default function AdminJobsPage() {
     }
 
     try {
+      let res
       if (editingJobId) {
-        await fetch(`http://localhost:5001/api/jobs/${editingJobId}`, {
+        res = await fetch(`http://localhost:5001/api/jobs/${editingJobId}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         })
       } else {
-        await fetch(`http://localhost:5001/api/jobs`, {
+        res = await fetch(`http://localhost:5001/api/jobs`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         })
       }
-      setView("list")
-      fetchJobs()
-    } catch (err) {
+      if (!res.ok) {
+        const errData = await res.json()
+        throw new Error(errData.message || "Server error")
+      }
+      setSubmitStatus("success")
+      setTimeout(() => {
+        setView("list")
+        fetchJobs()
+        setSubmitStatus(null)
+      }, 1500)
+    } catch (err: any) {
       console.error(err)
-      alert("Failed to save job")
+      setSubmitStatus("error")
+    } finally {
+      setSubmitting(false)
     }
   }
 
@@ -218,15 +244,30 @@ export default function AdminJobsPage() {
                 </div>
                 <div className="space-y-2">
                   <Label>Location</Label>
-                  <Input value={formData.location} onChange={e => setFormData({...formData, location: e.target.value})} required />
+                  <Select value={formData.location} onValueChange={v => setFormData({...formData, location: v})} required>
+                    <SelectTrigger><SelectValue placeholder="Select location" /></SelectTrigger>
+                    <SelectContent>
+                      {LOCATIONS.map(l => <SelectItem key={l} value={l}>{l}</SelectItem>)}
+                    </SelectContent>
+                  </Select>
                 </div>
                 <div className="space-y-2">
-                  <Label>Job Type (e.g., Full-time, Remote)</Label>
-                  <Input value={formData.type} onChange={e => setFormData({...formData, type: e.target.value})} required />
+                  <Label>Job Type</Label>
+                  <Select value={formData.type} onValueChange={v => setFormData({...formData, type: v})} required>
+                    <SelectTrigger><SelectValue placeholder="Select type" /></SelectTrigger>
+                    <SelectContent>
+                      {JOB_TYPES.map(t => <SelectItem key={t} value={t}>{t}</SelectItem>)}
+                    </SelectContent>
+                  </Select>
                 </div>
                 <div className="space-y-2">
                   <Label>Department</Label>
-                  <Input value={formData.department} onChange={e => setFormData({...formData, department: e.target.value})} required />
+                  <Select value={formData.department} onValueChange={v => setFormData({...formData, department: v})} required>
+                    <SelectTrigger><SelectValue placeholder="Select department" /></SelectTrigger>
+                    <SelectContent>
+                      {DEPARTMENTS.map(d => <SelectItem key={d} value={d}>{d}</SelectItem>)}
+                    </SelectContent>
+                  </Select>
                 </div>
                 <div className="space-y-2">
                   <Label>Experience Required</Label>
@@ -253,7 +294,21 @@ export default function AdminJobsPage() {
                 <Textarea rows={5} value={formData.responsibilities} onChange={e => setFormData({...formData, responsibilities: e.target.value})} required />
               </div>
 
-              <Button type="submit" className="w-full">{editingJobId ? "Update Job" : "Save Job"}</Button>
+              {submitStatus === "success" && (
+                <div className="flex items-center gap-2 rounded-md bg-green-50 border border-green-200 p-3 text-green-700">
+                  <CheckCircle2 className="h-4 w-4" />
+                  <span>Job {editingJobId ? "updated" : "saved"} successfully!</span>
+                </div>
+              )}
+              {submitStatus === "error" && (
+                <div className="flex items-center gap-2 rounded-md bg-red-50 border border-red-200 p-3 text-red-700">
+                  <XCircle className="h-4 w-4" />
+                  <span>Failed to save job. Check console for details.</span>
+                </div>
+              )}
+              <Button type="submit" className="w-full" disabled={submitting}>
+                {submitting ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Saving...</> : (editingJobId ? "Update Job" : "Save Job")}
+              </Button>
             </form>
           </CardContent>
         </Card>

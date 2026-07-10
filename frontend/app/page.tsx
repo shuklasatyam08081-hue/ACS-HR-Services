@@ -41,8 +41,8 @@ const services = [
 
 const stats = [
   { value: "3+", label: "Years Experience", icon: Clock },
-  { value: "200+", label: "Clients Served", icon: Building2 },
-  { value: "500+", label: "Placements Made", icon: Users },
+  { value: "150+", label: "Clients Served", icon: Building2 },
+  { value: "100+", label: "Placements Made", icon: Users },
   { value: "86%", label: "Client Satisfaction", icon: Award },
 ]
 
@@ -186,7 +186,7 @@ export default function HomePage() {
               <Card className="overflow-hidden bg-gradient-to-br from-primary/5 via-secondary to-accent/5">
                 <CardContent className="p-8">
                   <div className="text-center">
-                    <p className="text-6xl font-bold text-primary">8+</p>
+                    <p className="text-6xl font-bold text-primary">3+</p>
                     <p className="mt-2 text-lg font-semibold text-foreground">Years of Excellence</p>
                     <p className="mt-4 text-muted-foreground">
                       Serving businesses across India with dedication and expertise since 2023
