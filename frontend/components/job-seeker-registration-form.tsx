@@ -467,7 +467,7 @@ export function JobSeekerRegistrationForm() {
                         <input
                           type="checkbox"
                           id="terms"
-                          checked={field.value}
+                          checked={field.value || false}
                           onChange={field.onChange}
                           className="mt-1"
                         />
@@ -492,7 +492,7 @@ export function JobSeekerRegistrationForm() {
                 
                 <div className="flex flex-col items-center p-6 bg-secondary/30 rounded-lg border border-border space-y-4">
                   <img 
-                    src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=9711189713@paytm%26pn=ACSHRServices%26am=1000%26cu=INR" 
+                    src="/qr-code.png" 
                     alt="UPI QR Code" 
                     className="w-48 h-48 rounded-md bg-white p-2 border"
                   />

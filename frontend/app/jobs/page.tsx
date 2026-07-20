@@ -25,6 +25,7 @@ export default function JobsPage() {
   const [selectedLocation, setSelectedLocation] = useState("All Locations")
   const [jobs, setJobs] = useState<Job[]>([])
   const [loading, setLoading] = useState(true)
+  const [expandedJobs, setExpandedJobs] = useState<Set<string>>(new Set())
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -76,6 +77,34 @@ export default function JobsPage() {
     selectedType !== "All Types" ||
     selectedLocation !== "All Locations"
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && filteredJobs.length > 0) {
+      const newExpanded = new Set(expandedJobs)
+      filteredJobs.forEach(job => newExpanded.add(job.id))
+      setExpandedJobs(newExpanded)
+      
+      // Scroll to the first matched job after a short delay
+      setTimeout(() => {
+        const firstJobElement = document.getElementById(`job-${filteredJobs[0].id}`)
+        if (firstJobElement) {
+          firstJobElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }
+      }, 100)
+    }
+  }
+
+  const toggleJob = (id: string) => {
+    setExpandedJobs((prev) => {
+      const newSet = new Set(prev)
+      if (newSet.has(id)) {
+        newSet.delete(id)
+      } else {
+        newSet.add(id)
+      }
+      return newSet
+    })
+  }
+
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
@@ -106,6 +135,7 @@ export default function JobsPage() {
                 placeholder="Search jobs, companies, or keywords..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyDown={handleKeyDown}
                 className="pl-10"
               />
             </div>
@@ -179,16 +209,26 @@ export default function JobsPage() {
           ) : filteredJobs.length > 0 ? (
             <div className="grid gap-6">
               {filteredJobs.map((job) => (
-                <JobCard key={job.id} job={job} />
+                <div key={job.id} id={`job-${job.id}`} className="scroll-mt-24">
+                  <JobCard 
+                    job={job} 
+                    isExpanded={expandedJobs.has(job.id)} 
+                    onToggle={() => toggleJob(job.id)} 
+                  />
+                </div>
               ))}
             </div>
           ) : (
             <Card className="border-dashed">
               <CardContent className="flex flex-col items-center justify-center py-16">
                 <Briefcase className="mb-4 h-12 w-12 text-muted-foreground" />
-                <h3 className="text-lg font-semibold text-foreground">No jobs found</h3>
+                <h3 className="text-lg font-semibold text-foreground">
+                  {searchQuery ? "No postings available for this job right now" : "No jobs found"}
+                </h3>
                 <p className="mt-2 text-center text-muted-foreground">
-                  Try adjusting your search or filter criteria.
+                  {searchQuery 
+                    ? `We couldn't find any job postings matching "${searchQuery}". Try adjusting your search or filter criteria.`
+                    : "Try adjusting your search or filter criteria."}
                 </p>
                 <Button variant="outline" onClick={clearFilters} className="mt-4">
                   Clear All Filters

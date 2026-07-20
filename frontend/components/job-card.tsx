@@ -33,10 +33,22 @@ export interface Job {
 
 interface JobCardProps {
   job: Job
+  isExpanded?: boolean
+  onToggle?: () => void
 }
 
-export function JobCard({ job }: JobCardProps) {
-  const [isExpanded, setIsExpanded] = useState(false)
+export function JobCard({ job, isExpanded: propIsExpanded, onToggle }: JobCardProps) {
+  const [internalIsExpanded, setInternalIsExpanded] = useState(false)
+
+  const isExpanded = propIsExpanded !== undefined ? propIsExpanded : internalIsExpanded
+
+  const handleToggle = () => {
+    if (onToggle) {
+      onToggle()
+    } else {
+      setInternalIsExpanded(!isExpanded)
+    }
+  }
 
   const typeColors: Record<string, string> = {
     "Full-time": "bg-emerald-500/10 text-emerald-600 hover:bg-emerald-500/20",
@@ -153,7 +165,7 @@ export function JobCard({ job }: JobCardProps) {
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => setIsExpanded(!isExpanded)}
+            onClick={handleToggle}
             className="text-muted-foreground"
           >
             {isExpanded ? (

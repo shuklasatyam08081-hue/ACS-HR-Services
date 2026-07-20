@@ -1,43 +1,36 @@
-# Admin Job Management Feature
+# Implement Contact Form Backend and Email Notifications
 
-This plan outlines the steps to create a dynamic job listing system where an admin can manually add, edit, and delete jobs without touching the code.
+This plan describes how we will capture contact form submissions, store them in the database, and send them as email notifications.
 
 ## User Review Required
+
 > [!IMPORTANT]
-> The current jobs are hardcoded in the frontend. This plan will move them to the database (MongoDB). I will create a simple hidden Admin Dashboard (`/admin/jobs`) to manage these jobs.
-> For security, I can add a simple password prompt to access this admin page. Do you have a specific password you'd like to use (e.g., "admin123"), or should I just keep the page hidden without a password for now?
+> To send emails, we will use **Nodemailer**. You will need to provide an email account (like Gmail) and an "App Password" to allow the server to send emails. I will add placeholders in your `backend/.env` file for `EMAIL_USER` and `EMAIL_PASS`. You will need to fill these in for the emails to actually be sent. 
 
 ## Proposed Changes
 
 ### Backend
+#### [NEW] backend/models/contact.js
+Create a new Mongoose schema matching the contact form fields (name, email, phone, company, service, message).
 
-#### [NEW] `backend/models/job.js`
-- Create a new Mongoose schema for Jobs including fields like `title`, `company`, `location`, `type`, `department`, `experience`, `salary`, `description`, `requirements`, and `responsibilities`.
+#### [MODIFY] backend/package.json
+Install `nodemailer` to handle email sending.
 
-#### [MODIFY] `backend/server.js`
-- Add API endpoints to handle job data:
-  - `GET /api/jobs`: Fetch all jobs.
-  - `POST /api/jobs`: Create a new job.
-  - `PUT /api/jobs/:id`: Edit an existing job.
-  - `DELETE /api/jobs/:id`: Delete a job.
+#### [MODIFY] backend/server.js
+Add a new `POST /api/contact` route. This route will:
+1. Save the incoming contact form data to the MongoDB database using the new `Contact` model.
+2. Use Nodemailer to send an email notification to the site admin containing the message details.
 
 ### Frontend
-
-#### [MODIFY] `frontend/app/jobs/page.tsx`
-- Remove the hardcoded dummy jobs.
-- Add logic (`useEffect` and `fetch`) to load jobs dynamically from the backend API.
-
-#### [NEW] `frontend/app/admin/jobs/page.tsx`
-- Create a completely new Admin Dashboard page.
-- Add a simple password protection screen.
-- Build a user-friendly interface with forms to:
-  - View a table/list of all active jobs.
-  - Click a button to Add a new job listing.
-  - Edit or Delete existing job listings.
+#### [MODIFY] frontend/components/contact-form.tsx
+Update the `onSubmit` function to remove the simulated delay and instead make a real HTTP POST request to `http://localhost:5001/api/contact` with the form data.
 
 ## Verification Plan
+
 ### Manual Verification
-- Start the backend and frontend servers.
-- Go to `/admin/jobs` and test creating a new job.
-- Verify that the new job appears immediately on the public `/jobs` page.
-- Test editing and deleting a job to ensure changes reflect properly.
+1. I will provide a command to run the backend and frontend.
+2. You will need to update the `backend/.env` file with your `EMAIL_USER` and `EMAIL_PASS`.
+3. You can fill out the contact form on the frontend and check if:
+   - A success message appears.
+   - The data is visible in your MongoDB database.
+   - An email arrives at the configured address.

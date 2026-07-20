@@ -214,7 +214,7 @@ export default function AboutPage() {
             <div className="space-y-8">
               {milestones.map((milestone, index) => (
                 <div
-                  key={milestone.year}
+                  key={`${milestone.year}-${index}`}
                   className={`relative flex items-center gap-6 ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
                     }`}
                 >
