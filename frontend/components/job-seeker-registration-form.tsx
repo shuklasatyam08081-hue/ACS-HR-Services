@@ -43,7 +43,7 @@ const registrationSchema = z.object({
   education: z.string().min(1, "Education details are required"),
   jobPreference: z.string().min(1, "Please specify job preference"),
   termsAccepted: z.boolean().refine(val => val === true, { message: "You must accept the terms and conditions" }),
-  transactionId: z.string().min(6, "Please enter a valid Transaction/UTR Number"),
+  transactionId: z.string().regex(/^\d{12}$/, "Please enter a valid 12-digit UTR number"),
 })
 
 type RegistrationFormData = z.infer<typeof registrationSchema>
@@ -505,7 +505,7 @@ export function JobSeekerRegistrationForm() {
                   </div>
 
                   <a 
-                    href="upi://pay?pa=9711189713@paytm&pn=ACSHRServices&am=1000&cu=INR" 
+                    href="upi://pay?pa=9711189713@hdfc&pn=ACSHRServices&am=1000&cu=INR" 
                     className="w-full max-w-xs inline-flex items-center justify-center px-6 py-3 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors font-medium shadow-sm"
                   >
                     Pay via UPI App (Mobile)
