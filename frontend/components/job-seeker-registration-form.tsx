@@ -73,8 +73,43 @@ export function JobSeekerRegistrationForm() {
     mode: "onChange",
   })
 
+  const formValues = watch()
   const experienceType = watch("experienceType")
   const permanentAddress = watch("permanentAddress")
+
+  // Load saved details from localStorage on mount
+  useEffect(() => {
+    try {
+      const savedData = localStorage.getItem("acs_registration_draft")
+      if (savedData) {
+        const parsed = JSON.parse(savedData)
+        Object.keys(parsed).forEach((key) => {
+          setValue(key as keyof RegistrationFormData, parsed[key], { shouldValidate: true })
+        })
+        if (parsed.permanentAddress && parsed.currentAddress && parsed.permanentAddress === parsed.currentAddress) {
+          setSameAsPermanent(true)
+        }
+      }
+      
+      const savedStep = localStorage.getItem("acs_registration_step")
+      if (savedStep) {
+        setCurrentStep(Number(savedStep))
+      }
+    } catch (e) {
+      console.error("Failed to load draft:", e)
+    }
+  }, [setValue])
+
+  // Save current details & step to localStorage on changes
+  useEffect(() => {
+    if (Object.keys(formValues).length > 0) {
+      localStorage.setItem("acs_registration_draft", JSON.stringify(formValues))
+    }
+  }, [formValues])
+
+  useEffect(() => {
+    localStorage.setItem("acs_registration_step", String(currentStep))
+  }, [currentStep])
 
   // Handle "Same as Permanent Address" checkbox
   const handleSameAddress = (checked: boolean) => {
@@ -147,6 +182,9 @@ export function JobSeekerRegistrationForm() {
       const result = await response.json();
 
       if (response.ok && result.success) {
+        // Clear drafts on successful submit
+        localStorage.removeItem("acs_registration_draft")
+        localStorage.removeItem("acs_registration_step")
         setIsSubmitted(true);
       } else {
         setSubmitError(result.message || "Failed to register. Please try again.");
