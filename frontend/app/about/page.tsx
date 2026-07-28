@@ -40,12 +40,6 @@ const values = [
 
 const team = [
   {
-    name: "Rohit Kumar Saxena",
-    role: "Director",
-    bio: "Leading ACS HR Services with vision and strategic direction to connect talented professionals with the right opportunities.",
-    initials: "RS",
-  },
-  {
     name: "Amit Tiwari",
     role: "Co-Founder",
     bio: "Co-founding member with deep expertise in building client relationships and expanding business operations.",
@@ -135,6 +129,89 @@ export default function AboutPage() {
                   height={350}
                   className="relative rounded-2xl shadow-xl"
                 />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Director's Message Section */}
+      <section className="py-16 lg:py-24 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white">
+        <div className="container mx-auto px-4 lg:px-8">
+          <div className="mx-auto max-w-2xl text-center mb-14">
+            <p className="mb-3 text-sm font-semibold uppercase tracking-widest" style={{color: '#c9a84c'}}>
+              Leadership
+            </p>
+            <h2 className="text-3xl font-bold tracking-tight md:text-4xl text-white">
+              Director&apos;s Message
+            </h2>
+          </div>
+          <div className="mx-auto max-w-5xl">
+            <div className="relative rounded-3xl overflow-hidden" style={{background: 'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)', border: '1px solid rgba(201,168,76,0.3)', backdropFilter: 'blur(10px)'}}>
+              {/* Gold accent top bar */}
+              <div className="h-1 w-full" style={{background: 'linear-gradient(90deg, #c9a84c, #f0d080, #c9a84c)'}} />
+              <div className="p-8 lg:p-12">
+                <div className="grid gap-10 lg:grid-cols-5 items-start">
+                  {/* Director Photo */}
+                  <div className="lg:col-span-2 flex flex-col items-center">
+                    <div className="relative">
+                      <div className="absolute -inset-1 rounded-2xl" style={{background: 'linear-gradient(135deg, #c9a84c, #f0d080, #c9a84c)'}} />
+                      <Image
+                        src="/rohit-saxena.jpg"
+                        alt="Rohit Kumar Saxena - Director, ACS HR Services"
+                        width={280}
+                        height={340}
+                        className="relative rounded-2xl object-cover object-top"
+                        style={{height: '340px', width: '280px'}}
+                      />
+                    </div>
+                    <div className="mt-5 text-center">
+                      <h3 className="text-xl font-bold text-white">Rohit Kumar Saxena</h3>
+                      <p className="mt-1 text-sm font-semibold uppercase tracking-widest" style={{color: '#c9a84c'}}>Director</p>
+                      <p className="mt-1 text-xs text-slate-400">ACS HR Services</p>
+                      {/* LinkedIn */}
+                      <a
+                        href="https://www.linkedin.com/in/rohit-saxena-865b9a301"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-4 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-all hover:scale-105"
+                        style={{background: '#0A66C2', color: '#fff'}}
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="white">
+                          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                        Connect on LinkedIn
+                      </a>
+                    </div>
+                  </div>
+
+                  {/* Director's Statement */}
+                  <div className="lg:col-span-3 flex flex-col justify-center">
+                    {/* Quote marks */}
+                    <div className="text-6xl font-serif leading-none mb-4" style={{color: '#c9a84c', opacity: 0.6}}>&ldquo;</div>
+                    <div className="space-y-4 text-slate-300 text-base lg:text-lg leading-relaxed">
+                      <p>
+                        At ACS HR Services, we do not merely fill positions — we build careers, strengthen teams, and shape the future of organizations. Since our founding, my guiding principle has been simple: <span className="text-white font-semibold">the right talent in the right place transforms everything.</span>
+                      </p>
+                      <p>
+                        In today&apos;s rapidly evolving business landscape, human capital is the single most critical competitive advantage. We take immense pride in our ability to understand not just the skills a role demands, but the culture, vision, and ambition of both the hiring organization and the professional seeking growth.
+                      </p>
+                      <p>
+                        Our commitment to integrity, transparency, and personalized service is not a promise — it is the foundation upon which every placement, every partnership, and every success story at ACS HR Services is built.
+                      </p>
+                      <p>
+                        Whether you are an organization seeking exceptional talent or a professional ready to take the next step in your career, I assure you — at ACS HR Services, <span className="text-white font-semibold">your aspirations are in capable hands.</span>
+                      </p>
+                    </div>
+                    <div className="text-6xl font-serif leading-none mt-4 text-right" style={{color: '#c9a84c', opacity: 0.6}}>&rdquo;</div>
+                    {/* Signature */}
+                    <div className="mt-6 pt-6" style={{borderTop: '1px solid rgba(201,168,76,0.3)'}}>
+                      <p className="font-bold text-white text-lg">Rohit Kumar Saxena</p>
+                      <p className="text-sm mt-1" style={{color: '#c9a84c'}}>Director &amp; Founder</p>
+                      <p className="text-xs text-slate-400 mt-0.5">Anshuman Consultancy Services (ACS HR Services)</p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
