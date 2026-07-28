@@ -286,6 +286,57 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* Co-Founder's Message */}
+      <section className="py-14 lg:py-20">
+        <div className="container mx-auto px-4 lg:px-8">
+          <div className="mx-auto max-w-4xl">
+            <div className="flex flex-col md:flex-row-reverse items-center gap-10 bg-card rounded-2xl shadow-lg p-8 border border-border">
+              {/* Photo */}
+              <div className="relative shrink-0">
+                <div className="absolute -inset-1 rounded-full bg-gradient-to-br from-accent/40 to-primary/20 blur-md" />
+                <div className="relative h-40 w-40 overflow-hidden rounded-full border-4 border-accent/20 shadow-xl">
+                  <Image
+                    src="/amit-tiwari.jpg"
+                    alt="Amit Tiwari - Co-Founder"
+                    fill
+                    className="object-cover object-top"
+                  />
+                </div>
+              </div>
+
+              {/* Message */}
+              <div className="flex-1 text-center md:text-right">
+                <div className="mb-3 flex items-center justify-center md:justify-end gap-2">
+                  <Quote className="h-5 w-5 text-accent opacity-60" />
+                  <span className="text-xs font-semibold uppercase tracking-widest text-accent">Co-Founder's Message</span>
+                </div>
+                <blockquote className="text-base leading-relaxed text-muted-foreground italic">
+                  "Building ACS HR Services has been a journey driven by one core belief — that people are an
+                  organization's greatest asset. We founded this company to create meaningful connections between
+                  talent and opportunity. Every business we partner with, every candidate we place, moves us closer
+                  to a stronger, more empowered workforce."
+                </blockquote>
+                <div className="mt-5">
+                  <p className="text-lg font-bold text-foreground">Amit Tiwari</p>
+                  <p className="text-sm font-medium text-accent">Co-Founder, ACS HR Services</p>
+                  <div className="flex justify-center md:justify-end">
+                    <a
+                      href="https://www.linkedin.com/in/amit-tiwari-645347104"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-3 inline-flex items-center gap-2 rounded-md bg-[#0A66C2] px-4 py-1.5 text-sm font-medium text-white transition-opacity hover:opacity-90"
+                    >
+                      <Linkedin className="h-4 w-4" />
+                      Connect on LinkedIn
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Team Section */}
       <section id="team" className="py-16 lg:py-24">
         <div className="container mx-auto px-4 lg:px-8">
