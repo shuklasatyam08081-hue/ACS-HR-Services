@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useRef } from "react"
 import { useForm, Controller } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
@@ -20,7 +20,7 @@ import {
   RadioGroupItem,
 } from "@/components/ui/radio-group"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { CheckCircle, Loader2, FileText } from "lucide-react"
+import { CheckCircle, Loader2, FileText, Upload, X } from "lucide-react"
 
 const registrationSchema = z.object({
   fullName: z.string().min(2, "Full name is required"),
@@ -53,12 +53,18 @@ export function JobSeekerRegistrationForm() {
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [currentStep, setCurrentStep] = useState(1)
   const [submitError, setSubmitError] = useState<string | null>(null)
+  const [sameAsPermament, setSameAsPermanent] = useState(false)
+  const [resumeFile, setResumeFile] = useState<File | null>(null)
+  const [resumeError, setResumeError] = useState<string | null>(null)
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   const {
     register,
     handleSubmit,
     control,
     watch,
+    setValue,
+    getValues,
     formState: { errors },
     reset,
     trigger,
@@ -68,6 +74,45 @@ export function JobSeekerRegistrationForm() {
   })
 
   const experienceType = watch("experienceType")
+  const permanentAddress = watch("permanentAddress")
+
+  // Handle "Same as Permanent Address" checkbox
+  const handleSameAddress = (checked: boolean) => {
+    setSameAsPermanent(checked)
+    if (checked) {
+      const pAddr = getValues("permanentAddress")
+      setValue("currentAddress", pAddr, { shouldValidate: true })
+    }
+  }
+
+  // Keep current address in sync when permanent changes and checkbox is on
+  const handlePermanentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    if (sameAsPermament) {
+      setValue("currentAddress", e.target.value, { shouldValidate: true })
+    }
+  }
+
+  // Handle resume file selection
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    setResumeError(null)
+    if (!file) return
+
+    const allowedTypes = [
+      "application/pdf",
+      "application/msword",
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    ]
+    if (!allowedTypes.includes(file.type)) {
+      setResumeError("Only PDF, DOC, or DOCX files are allowed.")
+      return
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      setResumeError("File size must be less than 5MB.")
+      return
+    }
+    setResumeFile(file)
+  }
 
   const handleNext = async () => {
     let fieldsToValidate: any[] = [];
@@ -84,12 +129,19 @@ export function JobSeekerRegistrationForm() {
     setSubmitError(null)
     
     try {
+      // Use FormData to support file upload
+      const formData = new FormData()
+      Object.entries(data).forEach(([key, value]) => {
+        formData.append(key, String(value))
+      })
+      if (resumeFile) {
+        formData.append("resume", resumeFile)
+      }
+
       const response = await fetch("http://localhost:5001/api/register", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
+        body: formData,
+        // Don't set Content-Type — browser sets it with boundary for FormData
       });
 
       const result = await response.json();
@@ -126,6 +178,8 @@ export function JobSeekerRegistrationForm() {
               setIsSubmitted(false)
               reset()
               setCurrentStep(1)
+              setResumeFile(null)
+              setSameAsPermanent(false)
             }}
             className="mt-6"
           >
@@ -285,13 +339,16 @@ export function JobSeekerRegistrationForm() {
                   </div>
                 </div>
 
+                {/* Permanent Address */}
                 <div className="space-y-2">
                   <Label htmlFor="permanentAddress">Permanent Address *</Label>
                   <Textarea
                     id="permanentAddress"
                     placeholder="Street, City, State, Postal Code"
                     rows={2}
-                    {...register("permanentAddress")}
+                    {...register("permanentAddress", {
+                      onChange: handlePermanentChange,
+                    })}
                     className={errors.permanentAddress ? "border-destructive" : ""}
                   />
                   {errors.permanentAddress && (
@@ -299,14 +356,31 @@ export function JobSeekerRegistrationForm() {
                   )}
                 </div>
 
+                {/* Current Address with "Same as Permanent" checkbox */}
                 <div className="space-y-2">
-                  <Label htmlFor="currentAddress">Current Address *</Label>
+                  <div className="flex items-center justify-between">
+                    <Label htmlFor="currentAddress">Current Address *</Label>
+                    <label
+                      htmlFor="sameAsPermanent"
+                      className="flex items-center gap-2 cursor-pointer select-none text-sm text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      <input
+                        type="checkbox"
+                        id="sameAsPermanent"
+                        checked={sameAsPermament}
+                        onChange={(e) => handleSameAddress(e.target.checked)}
+                        className="h-4 w-4 rounded border-border accent-primary cursor-pointer"
+                      />
+                      Same as Permanent Address
+                    </label>
+                  </div>
                   <Textarea
                     id="currentAddress"
                     placeholder="Street, City, State, Postal Code"
                     rows={2}
                     {...register("currentAddress")}
-                    className={errors.currentAddress ? "border-destructive" : ""}
+                    disabled={sameAsPermament}
+                    className={`${errors.currentAddress ? "border-destructive" : ""} ${sameAsPermament ? "bg-secondary/50 text-muted-foreground" : ""}`}
                   />
                   {errors.currentAddress && (
                     <p className="text-sm text-destructive">{errors.currentAddress.message}</p>
@@ -323,6 +397,56 @@ export function JobSeekerRegistrationForm() {
                   />
                   {errors.languages && (
                     <p className="text-sm text-destructive">{errors.languages.message}</p>
+                  )}
+                </div>
+
+                {/* CV / Resume Upload */}
+                <div className="space-y-2">
+                  <Label>Upload CV / Resume <span className="text-muted-foreground font-normal">(Optional — PDF, DOC, DOCX · Max 5MB)</span></Label>
+                  <div
+                    onClick={() => fileInputRef.current?.click()}
+                    className={`relative flex flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed p-6 cursor-pointer transition-colors
+                      ${resumeFile ? "border-primary/50 bg-primary/5" : "border-border hover:border-primary/40 hover:bg-secondary/30"}
+                    `}
+                  >
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                      className="hidden"
+                      onChange={handleFileChange}
+                    />
+                    {resumeFile ? (
+                      <div className="flex items-center gap-3 w-full justify-center">
+                        <FileText className="h-8 w-8 text-primary shrink-0" />
+                        <div className="text-left min-w-0">
+                          <p className="text-sm font-medium text-foreground truncate">{resumeFile.name}</p>
+                          <p className="text-xs text-muted-foreground">{(resumeFile.size / 1024).toFixed(1)} KB</p>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            setResumeFile(null)
+                            if (fileInputRef.current) fileInputRef.current.value = ""
+                          }}
+                          className="ml-auto p-1 rounded-full hover:bg-destructive/10 text-muted-foreground hover:text-destructive transition-colors"
+                        >
+                          <X className="h-4 w-4" />
+                        </button>
+                      </div>
+                    ) : (
+                      <>
+                        <Upload className="h-8 w-8 text-muted-foreground" />
+                        <p className="text-sm text-muted-foreground text-center">
+                          <span className="font-medium text-primary">Click to upload</span> your CV or Resume
+                        </p>
+                        <p className="text-xs text-muted-foreground">PDF, DOC or DOCX up to 5MB</p>
+                      </>
+                    )}
+                  </div>
+                  {resumeError && (
+                    <p className="text-sm text-destructive">{resumeError}</p>
                   )}
                 </div>
               </div>

@@ -40,7 +40,7 @@ const values = [
 
 const team = [
   {
-    name: "Munish Sharma",
+    name: "Manish Sharma",
     role: "HR Compliance Manager",
     bio: "Ensuring all HR operations meet statutory compliance and regulatory requirements across industries.",
     initials: "MS",

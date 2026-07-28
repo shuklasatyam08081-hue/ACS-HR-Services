@@ -12,6 +12,25 @@ const nodemailer = require("nodemailer");
 const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
+const multer = require("multer");
+
+// Multer — store uploaded resume in memory (no disk writes needed)
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB max
+  fileFilter: (req, file, cb) => {
+    const allowed = [
+      "application/pdf",
+      "application/msword",
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    ];
+    if (allowed.includes(file.mimetype)) {
+      cb(null, true);
+    } else {
+      cb(new Error("Only PDF, DOC, DOCX files are allowed"));
+    }
+  },
+});
 
 const app = express();
 
@@ -62,7 +81,7 @@ app.get("/api", (req, res) => {
 });
 
 // ===== USER REGISTRATION ROUTE =====
-app.post("/api/register", async (req, res) => {
+app.post("/api/register", upload.single("resume"), async (req, res) => {
   try {
     const user = await User.create(req.body);
     
@@ -111,6 +130,7 @@ Gender: ${user.gender}
 Marital Status: ${user.maritalStatus}
 Languages: ${user.languages}
 Permanent Address: ${user.permanentAddress}
+Current Address: ${user.currentAddress}
 
 --- Professional Details ---
 Education/Qualification: ${user.education}
@@ -124,9 +144,19 @@ Notice Period: ${user.noticePeriod || 'N/A'}
 
 --- Payment & Verification ---
 Transaction ID: ${user.transactionId}
+${req.file ? '\nResume/CV is attached to this email.' : '\nNo resume was uploaded.'}
 
 Please check your MongoDB Atlas Database for the complete details.
           `,
+          attachments: req.file
+            ? [
+                {
+                  filename: req.file.originalname,
+                  content: req.file.buffer,
+                  contentType: req.file.mimetype,
+                },
+              ]
+            : [],
         };
 
         await transporter.sendMail(mailOptions);
