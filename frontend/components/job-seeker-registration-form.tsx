@@ -622,18 +622,29 @@ export function JobSeekerRegistrationForm() {
                   />
                   <p className="font-medium text-foreground text-center">Scan with any UPI App<br/>(GPay, PhonePe, Paytm)</p>
                   
-                  <div className="w-full max-w-sm flex items-center gap-4 my-4">
+                  <div className="w-full max-w-sm flex items-center gap-4 my-2">
                     <div className="h-px bg-border flex-1"></div>
-                    <span className="text-sm text-muted-foreground uppercase font-medium">OR</span>
+                    <span className="text-xs text-muted-foreground uppercase font-semibold">OR</span>
                     <div className="h-px bg-border flex-1"></div>
                   </div>
 
-                  <a 
-                    href="upi://pay?pa=9711189713@hdfc&pn=ACSHRServices&am=1000&cu=INR" 
-                    className="w-full max-w-xs inline-flex items-center justify-center px-6 py-3 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors font-medium shadow-sm"
-                  >
-                    Pay via UPI App (Mobile)
-                  </a>
+                  <div className="w-full max-w-xs flex flex-col items-center gap-2">
+                    <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Pay to UPI ID</span>
+                    <div className="flex w-full items-center gap-2 rounded-lg border bg-background p-2 pr-1 shadow-sm">
+                      <code className="flex-1 select-all px-2 text-center text-sm font-semibold text-foreground tracking-wide">
+                        9711189713@hdfc
+                      </code>
+                      <Button
+                        type="button"
+                        size="sm"
+                        variant="secondary"
+                        onClick={() => navigator.clipboard.writeText("9711189713@hdfc")}
+                        className="text-xs font-medium shrink-0"
+                      >
+                        Copy
+                      </Button>
+                    </div>
+                  </div>
                 </div>
 
                 <div className="space-y-2 mt-6">
