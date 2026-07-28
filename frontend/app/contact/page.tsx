@@ -106,13 +106,14 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <h3 className="text-lg font-semibold text-foreground">Office Address</h3>
-                      <p className="mt-2 text-muted-foreground">
-                        Shop no. 274, Prime Plaza<br />
-                        Munshipulia, Indira Nagar<br />
-                        Lucknow, Uttar Pradesh - 226016
+                      <p className="mt-2 text-muted-foreground font-medium text-primary">ACS HR Services</p>
+                      <p className="mt-1 text-muted-foreground">
+                        410, Munshi Pulia, Munshipulia<br />
+                        Indira Nagar, Lucknow<br />
+                        Uttar Pradesh - 226016
                       </p>
                       <a
-                        href="https://maps.google.com/?q=Prime+Plaza+Munshipulia+Indira+Nagar+Lucknow"
+                        href="https://www.google.com/maps/place//data=!4m2!3m1!1s0x399be330e84746c9:0xb848f6d35a6c0a4e"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="mt-3 inline-flex items-center text-sm font-medium text-primary hover:underline"
