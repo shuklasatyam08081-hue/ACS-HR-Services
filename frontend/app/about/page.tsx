@@ -334,16 +334,16 @@ export default function AboutPage() {
               Experienced professionals dedicated to delivering excellence in HR services. Teamwork begins by building trust.
             </p>
           </div>
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-12 grid gap-8 sm:grid-cols-2">
             {team.map((member) => (
-              <Card key={member.name} className="text-center">
-                <CardContent className="p-6">
-                  <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-primary text-2xl font-bold text-primary-foreground">
+              <Card key={member.name} className="text-center shadow-md hover:shadow-xl transition-shadow duration-300">
+                <CardContent className="p-10">
+                  <div className="mx-auto flex h-28 w-28 items-center justify-center rounded-full bg-primary text-3xl font-bold text-primary-foreground shadow-lg">
                     {member.initials}
                   </div>
-                  <h3 className="mt-4 text-lg font-semibold text-foreground">{member.name}</h3>
-                  <p className="text-sm font-medium text-primary">{member.role}</p>
-                  <p className="mt-3 text-sm text-muted-foreground">{member.bio}</p>
+                  <h3 className="mt-6 text-xl font-bold text-foreground">{member.name}</h3>
+                  <p className="mt-1 text-sm font-semibold text-primary uppercase tracking-wide">{member.role}</p>
+                  <p className="mt-4 text-base text-muted-foreground leading-relaxed">{member.bio}</p>
                 </CardContent>
               </Card>
             ))}
