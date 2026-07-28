@@ -124,32 +124,6 @@ export default function ContactPage() {
                 </CardContent>
               </Card>
 
-              {/* Business Hours */}
-              <Card>
-                <CardContent className="pt-6">
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
-                      <Clock className="h-5 w-5 text-primary" />
-                    </div>
-                    <h3 className="text-lg font-semibold text-foreground">Business Hours</h3>
-                  </div>
-                  <div className="mt-4 space-y-2">
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Monday - Friday</span>
-                      <span className="font-medium text-foreground">9:00 AM - 6:00 PM</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Saturday</span>
-                      <span className="font-medium text-foreground">10:00 AM - 4:00 PM</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Sunday</span>
-                      <span className="font-medium text-foreground">Closed</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
               {/* All Contact Numbers */}
               <Card>
                 <CardContent className="pt-6">
@@ -170,11 +144,7 @@ export default function ContactPage() {
                     </a>
                     <a href="tel:+919711189713" className="flex items-center gap-2 text-muted-foreground hover:text-primary">
                       <Phone className="h-4 w-4" />
-                      +91 97111 89713 (Amit)
-                    </a>
-                    <a href="mailto:amitacs2023@gmail.com" className="flex items-center gap-2 text-muted-foreground hover:text-primary">
-                      <Mail className="h-4 w-4" />
-                      amitacs2023@gmail.com
+                      +91 97111 89713
                     </a>
                   </div>
                 </CardContent>
