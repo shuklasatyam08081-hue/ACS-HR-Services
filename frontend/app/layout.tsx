@@ -8,6 +8,13 @@ import './globals.css'
 const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+}
+
 export const metadata: Metadata = {
   title: 'ACS HR Services | Turning Dreams into Reality',
   description: 'ACS HR Services (Anshuman Consultancy) - A leading job consultancy firm based in India specializing in contract staffing, IT & Non-IT staffing, HR services, training, payroll management, and more.',
@@ -39,7 +46,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="font-sans antialiased">
+      <body className="font-sans antialiased" suppressHydrationWarning>
         <div className="flex min-h-screen flex-col">
           <Header />
           <main className="flex-1">{children}</main>

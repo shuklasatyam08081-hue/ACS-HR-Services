@@ -89,7 +89,7 @@ export default function HomePage() {
               <div className="relative">
                 <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-primary/20 via-accent/10 to-transparent blur-2xl" />
                 <Image
-                  src="/logo.jpeg"
+                  src="/logo.png"
                   alt="ACS HR Services"
                   width={400}
                   height={400}

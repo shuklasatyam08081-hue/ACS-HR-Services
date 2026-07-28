@@ -191,15 +191,15 @@ export function JobSeekerRegistrationForm() {
                       name="gender"
                       control={control}
                       render={({ field }) => (
-                        <RadioGroup value={field.value} onValueChange={field.onChange}>
-                          <div className="flex items-center space-x-2">
+                        <RadioGroup value={field.value} onValueChange={field.onChange} className="flex flex-col sm:flex-row gap-4 sm:gap-6 mt-2">
+                          <Label htmlFor="male" className="flex items-center space-x-3 cursor-pointer p-2 -ml-2 rounded-md hover:bg-secondary/50 active:bg-secondary/80">
                             <RadioGroupItem value="male" id="male" />
-                            <Label htmlFor="male" className="font-normal cursor-pointer">Male</Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
+                            <span className="font-normal text-base">Male</span>
+                          </Label>
+                          <Label htmlFor="female" className="flex items-center space-x-3 cursor-pointer p-2 -ml-2 rounded-md hover:bg-secondary/50 active:bg-secondary/80">
                             <RadioGroupItem value="female" id="female" />
-                            <Label htmlFor="female" className="font-normal cursor-pointer">Female</Label>
-                          </div>
+                            <span className="font-normal text-base">Female</span>
+                          </Label>
                         </RadioGroup>
                       )}
                     />
@@ -214,15 +214,15 @@ export function JobSeekerRegistrationForm() {
                       name="maritalStatus"
                       control={control}
                       render={({ field }) => (
-                        <RadioGroup value={field.value} onValueChange={field.onChange}>
-                          <div className="flex items-center space-x-2">
+                        <RadioGroup value={field.value} onValueChange={field.onChange} className="flex flex-col sm:flex-row gap-4 sm:gap-6 mt-2">
+                          <Label htmlFor="married" className="flex items-center space-x-3 cursor-pointer p-2 -ml-2 rounded-md hover:bg-secondary/50 active:bg-secondary/80">
                             <RadioGroupItem value="married" id="married" />
-                            <Label htmlFor="married" className="font-normal cursor-pointer">Married</Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
+                            <span className="font-normal text-base">Married</span>
+                          </Label>
+                          <Label htmlFor="unmarried" className="flex items-center space-x-3 cursor-pointer p-2 -ml-2 rounded-md hover:bg-secondary/50 active:bg-secondary/80">
                             <RadioGroupItem value="unmarried" id="unmarried" />
-                            <Label htmlFor="unmarried" className="font-normal cursor-pointer">Unmarried</Label>
-                          </div>
+                            <span className="font-normal text-base">Unmarried</span>
+                          </Label>
                         </RadioGroup>
                       )}
                     />
@@ -339,19 +339,19 @@ export function JobSeekerRegistrationForm() {
                     name="experienceType"
                     control={control}
                     render={({ field }) => (
-                      <RadioGroup value={field.value} onValueChange={field.onChange}>
-                        <div className="flex items-center space-x-2">
+                      <RadioGroup value={field.value} onValueChange={field.onChange} className="flex flex-col sm:flex-row gap-4 sm:gap-6 mt-2">
+                        <Label htmlFor="current" className="flex items-center space-x-3 cursor-pointer p-2 -ml-2 rounded-md hover:bg-secondary/50 active:bg-secondary/80">
                           <RadioGroupItem value="current" id="current" />
-                          <Label htmlFor="current" className="font-normal cursor-pointer">Currently Employed</Label>
-                        </div>
-                        <div className="flex items-center space-x-2">
+                          <span className="font-normal text-base">Currently Employed</span>
+                        </Label>
+                        <Label htmlFor="previous" className="flex items-center space-x-3 cursor-pointer p-2 -ml-2 rounded-md hover:bg-secondary/50 active:bg-secondary/80">
                           <RadioGroupItem value="previous" id="previous" />
-                          <Label htmlFor="previous" className="font-normal cursor-pointer">Previously Employed</Label>
-                        </div>
-                        <div className="flex items-center space-x-2">
+                          <span className="font-normal text-base">Previously Employed</span>
+                        </Label>
+                        <Label htmlFor="fresher" className="flex items-center space-x-3 cursor-pointer p-2 -ml-2 rounded-md hover:bg-secondary/50 active:bg-secondary/80">
                           <RadioGroupItem value="fresher" id="fresher" />
-                          <Label htmlFor="fresher" className="font-normal cursor-pointer">Fresher</Label>
-                        </div>
+                          <span className="font-normal text-base">Fresher</span>
+                        </Label>
                       </RadioGroup>
                     )}
                   />

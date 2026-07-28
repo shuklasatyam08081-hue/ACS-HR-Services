@@ -40,7 +40,7 @@ export function Footer() {
           <div className="lg:col-span-2">
             <Link href="/" className="flex items-center gap-3">
               <Image
-                src="/logo.jpeg"
+                src="/logo.png"
                 alt="ACS HR Services Logo"
                 width={48}
                 height={48}

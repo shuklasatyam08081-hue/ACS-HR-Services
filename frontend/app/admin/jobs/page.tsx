@@ -22,6 +22,15 @@ const LOCATIONS = ["Mumbai, Maharashtra", "Delhi NCR", "Bangalore, Karnataka", "
 export default function AdminJobsPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [password, setPassword] = useState("")
+  const [loginError, setLoginError] = useState("")
+  
+  // Forgot / Reset Password state
+  const [authMode, setAuthMode] = useState<"login" | "forgot" | "reset">("login")
+  const [otp, setOtp] = useState("")
+  const [newPassword, setNewPassword] = useState("")
+  const [forgotMessage, setForgotMessage] = useState("")
+  const [forgotError, setForgotError] = useState("")
+  const [authLoading, setAuthLoading] = useState(false)
   
   const [jobs, setJobs] = useState<any[]>([])
   const [loading, setLoading] = useState(false)
@@ -63,13 +72,77 @@ export default function AdminJobsPage() {
     }
   }
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Simple password check for MVP
-    if (password === "admin123") {
-      setIsAuthenticated(true)
-    } else {
-      alert("Invalid password")
+    setLoginError("")
+    setAuthLoading(true)
+    try {
+      const res = await fetch("http://localhost:5001/api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password }),
+      })
+      const data = await res.json()
+      if (res.ok) {
+        setIsAuthenticated(true)
+      } else {
+        setLoginError(data.message || "Invalid password")
+      }
+    } catch (err) {
+      setLoginError("Failed to connect to backend server")
+    } finally {
+      setAuthLoading(false)
+    }
+  }
+
+  const handleRequestOtp = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setForgotError("")
+    setForgotMessage("")
+    setAuthLoading(true)
+    try {
+      const res = await fetch("http://localhost:5001/api/admin/forgot-password", {
+        method: "POST",
+      })
+      const data = await res.json()
+      if (res.ok) {
+        setForgotMessage(data.message || "OTP has been sent to your email.")
+        setAuthMode("reset")
+      } else {
+        setForgotError(data.message || "Failed to request OTP")
+      }
+    } catch (err) {
+      setForgotError("Failed to connect to backend server")
+    } finally {
+      setAuthLoading(false)
+    }
+  }
+
+  const handleResetPassword = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setForgotError("")
+    setForgotMessage("")
+    setAuthLoading(true)
+    try {
+      const res = await fetch("http://localhost:5001/api/admin/reset-password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ otp, newPassword }),
+      })
+      const data = await res.json()
+      if (res.ok) {
+        setForgotMessage("Password updated successfully! You can login now.")
+        setAuthMode("login")
+        setPassword("")
+        setOtp("")
+        setNewPassword("")
+      } else {
+        setForgotError(data.message || "Failed to reset password")
+      }
+    } catch (err) {
+      setForgotError("Failed to connect to backend server")
+    } finally {
+      setAuthLoading(false)
     }
   }
 
@@ -165,16 +238,116 @@ export default function AdminJobsPage() {
       <div className="flex h-screen items-center justify-center bg-secondary/30">
         <Card className="w-full max-w-md">
           <CardHeader>
-            <CardTitle className="text-center">Admin Login</CardTitle>
+            <CardTitle className="text-center">
+              {authMode === "login" && "Admin Login"}
+              {authMode === "forgot" && "Reset Password"}
+              {authMode === "reset" && "Verify OTP & Reset"}
+            </CardTitle>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleLogin} className="space-y-4">
-              <div className="space-y-2">
-                <Label>Password</Label>
-                <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-              </div>
-              <Button type="submit" className="w-full">Login</Button>
-            </form>
+            {authMode === "login" && (
+              <form onSubmit={handleLogin} className="space-y-4">
+                <div className="space-y-2">
+                  <Label>Password</Label>
+                  <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                </div>
+                {loginError && (
+                  <p className="text-sm font-medium text-destructive">{loginError}</p>
+                )}
+                {forgotMessage && (
+                  <p className="text-sm font-medium text-green-600">{forgotMessage}</p>
+                )}
+                <Button type="submit" className="w-full" disabled={authLoading}>
+                  {authLoading ? "Logging in..." : "Login"}
+                </Button>
+                <div className="text-center mt-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setAuthMode("forgot");
+                      setLoginError("");
+                      setForgotMessage("");
+                    }}
+                    className="text-xs text-primary hover:underline"
+                  >
+                    Forgot Password?
+                  </button>
+                </div>
+              </form>
+            )}
+
+            {authMode === "forgot" && (
+              <form onSubmit={handleRequestOtp} className="space-y-4">
+                <p className="text-sm text-muted-foreground">
+                  An OTP will be sent to the configured admin email address.
+                </p>
+                {forgotError && (
+                  <p className="text-sm font-medium text-destructive">{forgotError}</p>
+                )}
+                <Button type="submit" className="w-full" disabled={authLoading}>
+                  {authLoading ? "Sending OTP..." : "Request Reset OTP"}
+                </Button>
+                <div className="text-center mt-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setAuthMode("login");
+                      setForgotError("");
+                    }}
+                    className="text-xs text-muted-foreground hover:underline"
+                  >
+                    Back to Login
+                  </button>
+                </div>
+              </form>
+            )}
+
+            {authMode === "reset" && (
+              <form onSubmit={handleResetPassword} className="space-y-4">
+                {forgotMessage && (
+                  <p className="text-sm font-medium text-green-600">{forgotMessage}</p>
+                )}
+                <div className="space-y-2">
+                  <Label>6-Digit OTP</Label>
+                  <Input 
+                    type="text" 
+                    placeholder="123456" 
+                    value={otp} 
+                    onChange={(e) => setOtp(e.target.value)} 
+                    maxLength={6} 
+                    required 
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>New Password</Label>
+                  <Input 
+                    type="password" 
+                    value={newPassword} 
+                    onChange={(e) => setNewPassword(e.target.value)} 
+                    required 
+                  />
+                </div>
+                {forgotError && (
+                  <p className="text-sm font-medium text-destructive">{forgotError}</p>
+                )}
+                <Button type="submit" className="w-full" disabled={authLoading}>
+                  {authLoading ? "Resetting..." : "Reset Password"}
+                </Button>
+                <div className="text-center mt-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setAuthMode("login");
+                      setForgotError("");
+                      setForgotMessage("");
+                    }}
+                    className="text-xs text-muted-foreground hover:underline"
+                  >
+                    Cancel & Back
+                  </button>
+                </div>
+              </form>
+            )}
           </CardContent>
         </Card>
       </div>
