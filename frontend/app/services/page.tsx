@@ -265,16 +265,18 @@ export default function ServicesPage() {
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="bg-gradient-to-b from-secondary/50 to-background py-16 lg:py-24">
-        <div className="container mx-auto px-4 lg:px-8">
-          <div className="mx-auto max-w-3xl text-center">
-            <p className="mb-4 text-sm font-medium uppercase tracking-wider text-primary">
+      <section className="relative overflow-hidden bg-gradient-to-b from-primary/10 via-background to-background py-12 lg:py-16">
+        <div className="absolute top-0 left-1/2 w-[1000px] h-[500px] bg-primary/20 rounded-full blur-[120px] -translate-x-1/2 -translate-y-1/2 opacity-50 pointer-events-none" />
+        <div className="container relative mx-auto px-4 lg:px-8">
+          <div className="mx-auto max-w-3xl text-center animate-in fade-in zoom-in duration-1000">
+            <div className="inline-flex items-center rounded-full border bg-background/50 backdrop-blur-sm px-4 py-1.5 text-sm font-semibold text-primary mb-6 shadow-sm">
+              <span className="flex h-2 w-2 rounded-full bg-primary mr-2 animate-pulse"></span>
               Our Services
-            </p>
-            <h1 className="text-balance text-4xl font-bold tracking-tight text-foreground md:text-5xl">
+            </div>
+            <h1 className="text-balance text-5xl font-extrabold tracking-tight text-foreground md:text-6xl lg:text-7xl">
               Comprehensive HR Solutions for Every Business
             </h1>
-            <p className="mt-6 text-pretty text-lg text-muted-foreground">
+            <p className="mt-6 text-pretty text-lg text-muted-foreground md:text-xl leading-relaxed">
               From contract staffing to payroll management, we offer end-to-end HR services designed to help your business thrive in a dynamic market landscape.
             </p>
           </div>
@@ -282,25 +284,25 @@ export default function ServicesPage() {
       </section>
 
       {/* Services Overview Grid */}
-      <section className="py-16 lg:py-20">
+      <section className="py-8 lg:py-10">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {services.map((service) => (
-              <Card key={service.id} className="group transition-all hover:shadow-lg">
-                <CardHeader>
-                  <div className={`mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl ${service.color}`}>
-                    <service.icon className="h-6 w-6" />
+              <Card key={service.id} className="group relative overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-primary/10 hover:border-primary/30 bg-gradient-to-b from-background to-secondary/10">
+                <CardHeader className="relative z-10">
+                  <div className={`mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3 group-hover:shadow-md ${service.color}`}>
+                    <service.icon className="h-7 w-7" />
                   </div>
-                  <CardTitle className="text-xl">{service.title}</CardTitle>
-                  <CardDescription>{service.description}</CardDescription>
+                  <CardTitle className="text-2xl font-bold">{service.title}</CardTitle>
+                  <CardDescription className="text-base leading-relaxed mt-2 font-medium">{service.description}</CardDescription>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="relative z-10 pt-4 border-t border-border/50 mt-2">
                   <Link
                     href={`#${service.id}-detail`}
-                    className="inline-flex items-center text-sm font-medium text-primary hover:underline"
+                    className="inline-flex items-center text-sm font-bold uppercase tracking-wider text-primary transition-colors hover:text-accent group-hover:underline underline-offset-4"
                   >
                     Learn More
-                    <ArrowRight className="ml-1 h-4 w-4" />
+                    <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </Link>
                 </CardContent>
               </Card>
@@ -314,7 +316,7 @@ export default function ServicesPage() {
         <section
           key={service.id}
           id={`${service.id}-detail`}
-          className={index % 2 === 0 ? "py-16 lg:py-24" : "bg-secondary/30 py-16 lg:py-24"}
+          className={index % 2 === 0 ? "py-8 lg:py-10" : "bg-secondary/30 py-8 lg:py-10"}
         >
           <div className="container mx-auto px-4 lg:px-8">
             <div className="grid items-start gap-12 lg:grid-cols-2">
@@ -329,7 +331,7 @@ export default function ServicesPage() {
                 <p className="mt-4 text-lg text-muted-foreground">{service.description}</p>
 
                 {/* Features */}
-                <div className="mt-8 grid gap-4 sm:grid-cols-2">
+                <div className="mt-6 grid gap-4 sm:grid-cols-2">
                   {service.features.map((feature) => (
                     <Card key={feature.title} className="border-none bg-card/50 shadow-sm">
                       <CardContent className="p-4">
@@ -364,7 +366,7 @@ export default function ServicesPage() {
                         </li>
                       ))}
                     </ol>
-                    <div className="mt-8">
+                    <div className="mt-6">
                       <Button asChild className="w-full">
                         <Link href="/contact">
                           Inquire About {service.title}
@@ -381,7 +383,7 @@ export default function ServicesPage() {
       ))}
 
       {/* Industries */}
-      <section className="py-16 lg:py-24">
+      <section className="py-8 lg:py-10">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl">
@@ -391,14 +393,14 @@ export default function ServicesPage() {
               Our expertise spans across multiple sectors, enabling us to understand your unique challenges.
             </p>
           </div>
-          <div className="mt-12 flex flex-wrap justify-center gap-3">
+          <div className="mt-12 flex flex-wrap justify-center gap-4">
             {industries.map((industry) => (
               <div
                 key={industry}
-                className="flex items-center gap-2 rounded-full bg-secondary px-4 py-2"
+                className="group flex items-center gap-2 rounded-full bg-secondary/80 px-5 py-3 shadow-sm hover:bg-primary hover:text-primary-foreground hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-default border border-transparent hover:border-primary/50"
               >
-                <CheckCircle className="h-4 w-4 text-primary" />
-                <span className="text-sm font-medium text-foreground">{industry}</span>
+                <CheckCircle className="h-5 w-5 text-primary group-hover:text-primary-foreground transition-colors" />
+                <span className="text-sm font-bold">{industry}</span>
               </div>
             ))}
           </div>
@@ -406,7 +408,7 @@ export default function ServicesPage() {
       </section>
 
       {/* Service Calculator */}
-      <section id="calculator" className="bg-secondary/30 py-16 lg:py-24">
+      <section id="calculator" className="bg-secondary/30 py-8 lg:py-10">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="mx-auto mb-12 max-w-2xl text-center">
             <h2 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl">
@@ -421,25 +423,26 @@ export default function ServicesPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 lg:py-24">
-        <div className="container mx-auto px-4 lg:px-8">
-          <Card className="overflow-hidden bg-primary text-primary-foreground">
-            <CardContent className="p-8 md:p-12">
+      <section className="py-8 lg:py-10 relative overflow-hidden">
+        <div className="container relative mx-auto px-4 lg:px-8 z-10">
+          <Card className="overflow-hidden border-0 shadow-2xl bg-gradient-to-br from-primary via-primary/90 to-primary/80 text-primary-foreground relative rounded-[2rem]">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.15),transparent_50%)]" />
+            <CardContent className="p-10 md:p-16 lg:p-20 relative z-10">
               <div className="mx-auto max-w-3xl text-center">
-                <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
+                <h2 className="text-4xl font-extrabold tracking-tight md:text-5xl lg:text-6xl drop-shadow-sm">
                   Need a Custom Solution?
                 </h2>
-                <p className="mt-4 text-primary-foreground/80">
+                <p className="mt-6 text-lg text-primary-foreground/90 md:text-xl max-w-2xl mx-auto font-medium leading-relaxed">
                   Every business is unique. Let us design a tailored HR package that perfectly fits your requirements and budget.
                 </p>
                 <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-                  <Button size="lg" variant="secondary" asChild>
+                  <Button size="lg" variant="secondary" className="h-14 px-8 text-base font-bold shadow-xl hover:scale-105 transition-transform" asChild>
                     <Link href="/contact">Schedule a Consultation</Link>
                   </Button>
                   <Button
                     size="lg"
                     variant="outline"
-                    className="border-primary-foreground/30 bg-transparent text-primary-foreground hover:bg-primary-foreground/10"
+                    className="h-14 px-8 text-base font-bold border-2 border-primary-foreground/40 bg-transparent text-primary-foreground hover:bg-primary-foreground hover:text-primary transition-all hover:scale-105 shadow-lg"
                     asChild
                   >
                     <Link href="tel:+919120335555">Call +91 91203 35555</Link>

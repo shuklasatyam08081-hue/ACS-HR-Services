@@ -62,7 +62,7 @@ export default function AdminJobsPage() {
   const fetchJobs = async () => {
     setLoading(true)
     try {
-      const res = await fetch("http://localhost:5001/api/jobs")
+      const res = await fetch("/api/jobs")
       const data = await res.json()
       setJobs(data)
     } catch (err) {
@@ -77,7 +77,7 @@ export default function AdminJobsPage() {
     setLoginError("")
     setAuthLoading(true)
     try {
-      const res = await fetch("http://localhost:5001/api/admin/login", {
+      const res = await fetch("/api/admin/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ password }),
@@ -101,7 +101,7 @@ export default function AdminJobsPage() {
     setForgotMessage("")
     setAuthLoading(true)
     try {
-      const res = await fetch("http://localhost:5001/api/admin/forgot-password", {
+      const res = await fetch("/api/admin/forgot-password", {
         method: "POST",
       })
       const data = await res.json()
@@ -124,7 +124,7 @@ export default function AdminJobsPage() {
     setForgotMessage("")
     setAuthLoading(true)
     try {
-      const res = await fetch("http://localhost:5001/api/admin/reset-password", {
+      const res = await fetch("/api/admin/reset-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ otp, newPassword }),
@@ -149,7 +149,7 @@ export default function AdminJobsPage() {
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure you want to delete this job?")) return
     try {
-      await fetch(`http://localhost:5001/api/jobs/${id}`, { method: "DELETE" })
+      await fetch(`/api/jobs/${id}`, { method: "DELETE" })
       fetchJobs()
     } catch (err) {
       console.error(err)
@@ -203,13 +203,13 @@ export default function AdminJobsPage() {
     try {
       let res
       if (editingJobId) {
-        res = await fetch(`http://localhost:5001/api/jobs/${editingJobId}`, {
+        res = await fetch(`/api/jobs/${editingJobId}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         })
       } else {
-        res = await fetch(`http://localhost:5001/api/jobs`, {
+        res = await fetch(`/api/jobs`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
@@ -356,7 +356,7 @@ export default function AdminJobsPage() {
 
   return (
     <div className="container mx-auto py-12 px-4">
-      <div className="mb-8 flex items-center justify-between">
+      <div className="mb-6 flex items-center justify-between">
         <h1 className="text-3xl font-bold">Manage Job Listings</h1>
         {view === "list" && (
           <Button onClick={handleAddNew}>

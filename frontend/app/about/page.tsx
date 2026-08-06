@@ -77,16 +77,18 @@ export default function AboutPage() {
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="bg-gradient-to-b from-secondary/50 to-background py-16 lg:py-24">
-        <div className="container mx-auto px-4 lg:px-8">
-          <div className="mx-auto max-w-3xl text-center">
-            <p className="mb-4 text-sm font-medium uppercase tracking-wider text-primary">
+      <section className="relative overflow-hidden bg-gradient-to-b from-primary/10 via-background to-background py-12 lg:py-16">
+        <div className="absolute top-0 left-1/2 w-[1000px] h-[500px] bg-primary/20 rounded-full blur-[120px] -translate-x-1/2 -translate-y-1/2 opacity-50 pointer-events-none" />
+        <div className="container relative mx-auto px-4 lg:px-8">
+          <div className="mx-auto max-w-3xl text-center animate-in fade-in zoom-in duration-1000">
+            <div className="inline-flex items-center rounded-full border bg-background/50 backdrop-blur-sm px-4 py-1.5 text-sm font-semibold text-primary mb-6 shadow-sm">
+              <span className="flex h-2 w-2 rounded-full bg-primary mr-2 animate-pulse"></span>
               About Us
-            </p>
-            <h1 className="text-balance text-4xl font-bold tracking-tight text-foreground md:text-5xl">
-              Turning Dreams into Reality
+            </div>
+            <h1 className="text-balance text-5xl font-extrabold tracking-tight text-foreground md:text-6xl lg:text-7xl">
+              Turning <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">Dreams</span> into Reality
             </h1>
-            <p className="mt-6 text-pretty text-lg text-muted-foreground">
+            <p className="mt-6 text-pretty text-lg text-muted-foreground md:text-xl leading-relaxed">
               Anshuman Consultancy is a leading job consultancy firm based in India, specializing in connecting talented professionals with reputable companies across various industries.
             </p>
           </div>
@@ -94,7 +96,7 @@ export default function AboutPage() {
       </section>
 
       {/* Story Section */}
-      <section className="py-16 lg:py-24">
+      <section className="py-8 lg:py-10">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="grid items-center gap-12 lg:grid-cols-2">
             <div>
@@ -130,27 +132,28 @@ export default function AboutPage() {
       </section>
 
       {/* Mission & Vision */}
-      <section className="bg-secondary/30 py-16 lg:py-24">
-        <div className="container mx-auto px-4 lg:px-8">
-          <div className="grid gap-8 md:grid-cols-2">
-            <Card className="border-none bg-card shadow-lg">
-              <CardContent className="p-8">
-                <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-lg bg-primary/10">
-                  <Target className="h-7 w-7 text-primary" />
+      <section className="py-8 lg:py-10 relative overflow-hidden">
+        <div className="absolute top-1/2 right-0 w-[500px] h-[500px] bg-accent/5 rounded-full blur-[100px] -translate-y-1/2 pointer-events-none" />
+        <div className="container mx-auto px-4 lg:px-8 relative z-10">
+          <div className="grid gap-6 md:grid-cols-2">
+            <Card className="border-0 bg-gradient-to-br from-background to-secondary/20 shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+              <CardContent className="p-10">
+                <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 shadow-inner">
+                  <Target className="h-8 w-8 text-primary" />
                 </div>
-                <h3 className="text-2xl font-bold text-foreground">Our Mission</h3>
-                <p className="mt-4 text-muted-foreground">
+                <h3 className="text-3xl font-extrabold text-foreground">Our Mission</h3>
+                <p className="mt-4 text-lg text-muted-foreground leading-relaxed">
                   Empowering businesses with tailored strategies and innovative solutions, we drive sustainable growth, optimize operations, and enhance competitive advantage, ensuring our clients thrive in a dynamic market landscape.
                 </p>
               </CardContent>
             </Card>
-            <Card className="border-none bg-card shadow-lg">
-              <CardContent className="p-8">
-                <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-lg bg-accent/10">
-                  <Eye className="h-7 w-7 text-accent" />
+            <Card className="border-0 bg-gradient-to-br from-background to-secondary/20 shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+              <CardContent className="p-10">
+                <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-accent/10 shadow-inner">
+                  <Eye className="h-8 w-8 text-accent" />
                 </div>
-                <h3 className="text-2xl font-bold text-foreground">Our Vision</h3>
-                <p className="mt-4 text-muted-foreground">
+                <h3 className="text-3xl font-extrabold text-foreground">Our Vision</h3>
+                <p className="mt-4 text-lg text-muted-foreground leading-relaxed">
                   To be India&apos;s most trusted HR consultancy, known for transforming workplaces and careers. We envision a future where every organization has access to world-class HR support and every professional finds their dream opportunity.
                 </p>
               </CardContent>
@@ -160,25 +163,26 @@ export default function AboutPage() {
       </section>
 
       {/* Values */}
-      <section className="py-16 lg:py-24">
+      <section className="py-8 lg:py-10 bg-secondary/20">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl">
+          <div className="mx-auto max-w-2xl text-center mb-6">
+            <h2 className="text-3xl font-extrabold tracking-tight text-foreground md:text-5xl">
               Our Core Values
             </h2>
-            <p className="mt-4 text-muted-foreground">
+            <div className="w-20 h-1.5 bg-primary mx-auto mt-6 rounded-full" />
+            <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
               Teamwork begins by building trust. These principles guide everything we do and define who we are as an organization.
             </p>
           </div>
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {values.map((value, index) => (
-              <Card key={value.title} className={index === 4 ? "sm:col-span-2 lg:col-span-1" : ""}>
-                <CardContent className="p-6">
-                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
-                    <value.icon className="h-6 w-6 text-primary" />
+              <Card key={value.title} className={`group overflow-hidden border-0 bg-background shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 ${index === 4 ? "sm:col-span-2 lg:col-span-1" : ""}`}>
+                <CardContent className="p-8">
+                  <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
+                    <value.icon className="h-7 w-7 text-primary" />
                   </div>
-                  <h3 className="text-lg font-semibold text-foreground">{value.title}</h3>
-                  <p className="mt-2 text-sm text-muted-foreground">{value.description}</p>
+                  <h3 className="text-xl font-bold text-foreground">{value.title}</h3>
+                  <p className="mt-3 text-base text-muted-foreground leading-relaxed">{value.description}</p>
                 </CardContent>
               </Card>
             ))}
@@ -187,7 +191,7 @@ export default function AboutPage() {
       </section>
 
       {/* Timeline */}
-      <section className="bg-secondary/30 py-16 lg:py-24">
+      <section className="bg-secondary/30 py-8 lg:py-10">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl">
@@ -226,7 +230,7 @@ export default function AboutPage() {
       </section>
 
       {/* Director's Message */}
-      <section className="py-14 lg:py-20 bg-secondary/30">
+      <section className="py-8 lg:py-10 bg-secondary/30">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="mx-auto max-w-4xl">
             <div className="flex flex-col md:flex-row items-center gap-10 bg-card rounded-2xl shadow-lg p-8 border border-border">
@@ -275,7 +279,7 @@ export default function AboutPage() {
       </section>
 
       {/* Co-Founder's Message */}
-      <section className="py-14 lg:py-20">
+      <section className="py-8 lg:py-10">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="mx-auto max-w-4xl">
             <div className="flex flex-col md:flex-row-reverse items-center gap-10 bg-card rounded-2xl shadow-lg p-8 border border-border">
@@ -324,7 +328,7 @@ export default function AboutPage() {
       </section>
 
       {/* Team Section */}
-      <section id="team" className="py-16 lg:py-24">
+      <section id="team" className="py-8 lg:py-10">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl">
@@ -334,7 +338,7 @@ export default function AboutPage() {
               Experienced professionals dedicated to delivering excellence in HR services. Teamwork begins by building trust.
             </p>
           </div>
-          <div className="mt-12 grid gap-8 sm:grid-cols-2">
+          <div className="mt-12 grid gap-6 sm:grid-cols-2">
             {team.map((member) => (
               <Card key={member.name} className="text-center shadow-md hover:shadow-xl transition-shadow duration-300">
                 <CardContent className="p-10">
@@ -352,32 +356,37 @@ export default function AboutPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-primary py-16 lg:py-20">
-        <div className="container mx-auto px-4 lg:px-8">
-          <div className="mx-auto max-w-3xl text-center">
-            <h2 className="text-3xl font-bold tracking-tight text-primary-foreground md:text-4xl">
-              Stay Inspired. Never Stop Creating.
-            </h2>
-            <p className="mt-4 text-primary-foreground/80">
-              Let&apos;s discuss how our expertise can help your organization achieve its HR goals or find your dream job.
-            </p>
-            <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <Button size="lg" variant="secondary" asChild>
-                <Link href="/contact">
-                  Contact Us Today
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-primary-foreground/30 bg-transparent text-primary-foreground hover:bg-primary-foreground/10"
-                asChild
-              >
-                <Link href="/services">View Our Services</Link>
-              </Button>
-            </div>
-          </div>
+      <section className="py-8 lg:py-10 relative overflow-hidden">
+        <div className="container relative mx-auto px-4 lg:px-8 z-10">
+          <Card className="overflow-hidden border-0 shadow-2xl bg-gradient-to-br from-primary via-primary/90 to-primary/80 text-primary-foreground relative rounded-[2rem]">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.15),transparent_50%)]" />
+            <CardContent className="p-10 md:p-16 lg:p-20 relative z-10">
+              <div className="mx-auto max-w-3xl text-center">
+                <h2 className="text-4xl font-extrabold tracking-tight md:text-5xl lg:text-6xl drop-shadow-sm">
+                  Stay Inspired. Never Stop Creating.
+                </h2>
+                <p className="mt-6 text-lg text-primary-foreground/90 md:text-xl max-w-2xl mx-auto font-medium leading-relaxed">
+                  Let&apos;s discuss how our expertise can help your organization achieve its HR goals or find your dream job.
+                </p>
+                <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+                  <Button size="lg" variant="secondary" className="h-14 px-8 text-base font-bold shadow-xl hover:scale-105 transition-transform" asChild>
+                    <Link href="/contact">
+                      Contact Us Today
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </Button>
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="h-14 px-8 text-base font-bold border-2 border-primary-foreground/40 bg-transparent text-primary-foreground hover:bg-primary-foreground hover:text-primary transition-all hover:scale-105 shadow-lg"
+                    asChild
+                  >
+                    <Link href="/services">View Our Services</Link>
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </section>
     </div>

@@ -30,7 +30,7 @@ export default function JobsPage() {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await fetch("http://localhost:5001/api/jobs")
+        const response = await fetch("/api/jobs")
         if (response.ok) {
           const data = await response.json()
           setJobs(data)
@@ -108,16 +108,18 @@ export default function JobsPage() {
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="bg-gradient-to-b from-secondary/50 to-background py-16 lg:py-24">
-        <div className="container mx-auto px-4 lg:px-8">
-          <div className="mx-auto max-w-3xl text-center">
-            <p className="mb-4 text-sm font-medium uppercase tracking-wider text-primary">
+      <section className="relative overflow-hidden bg-gradient-to-b from-primary/10 via-background to-background py-12 lg:py-16">
+        <div className="absolute top-0 left-1/2 w-[1000px] h-[500px] bg-primary/20 rounded-full blur-[120px] -translate-x-1/2 -translate-y-1/2 opacity-50 pointer-events-none" />
+        <div className="container relative mx-auto px-4 lg:px-8">
+          <div className="mx-auto max-w-3xl text-center animate-in fade-in zoom-in duration-1000">
+            <div className="inline-flex items-center rounded-full border bg-background/50 backdrop-blur-sm px-4 py-1.5 text-sm font-semibold text-primary mb-6 shadow-sm">
+              <span className="flex h-2 w-2 rounded-full bg-primary mr-2 animate-pulse"></span>
               Career Opportunities
-            </p>
-            <h1 className="text-balance text-4xl font-bold tracking-tight text-foreground md:text-5xl">
+            </div>
+            <h1 className="text-balance text-5xl font-extrabold tracking-tight text-foreground md:text-6xl lg:text-7xl">
               Find Your Next Opportunity
             </h1>
-            <p className="mt-6 text-pretty text-lg text-muted-foreground">
+            <p className="mt-6 text-pretty text-lg text-muted-foreground md:text-xl leading-relaxed">
               Browse current job openings from our clients across various industries and locations.
             </p>
           </div>
@@ -193,7 +195,7 @@ export default function JobsPage() {
       </section>
 
       {/* Job Listings */}
-      <section className="py-12 lg:py-16">
+      <section className="py-8 lg:py-10">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="mb-6 flex items-center justify-between">
             <p className="text-muted-foreground">
@@ -219,18 +221,20 @@ export default function JobsPage() {
               ))}
             </div>
           ) : (
-            <Card className="border-dashed">
-              <CardContent className="flex flex-col items-center justify-center py-16">
-                <Briefcase className="mb-4 h-12 w-12 text-muted-foreground" />
-                <h3 className="text-lg font-semibold text-foreground">
+            <Card className="border-2 border-dashed border-primary/20 bg-gradient-to-br from-background to-secondary/20 hover:shadow-lg transition-shadow duration-300">
+              <CardContent className="flex flex-col items-center justify-center py-20">
+                <div className="flex h-20 w-20 items-center justify-center rounded-full bg-primary/10 mb-6">
+                  <Briefcase className="h-10 w-10 text-primary" />
+                </div>
+                <h3 className="text-2xl font-bold text-foreground">
                   {searchQuery ? "No postings available for this job right now" : "No jobs found"}
                 </h3>
-                <p className="mt-2 text-center text-muted-foreground">
+                <p className="mt-3 text-center text-lg text-muted-foreground max-w-md">
                   {searchQuery 
                     ? `We couldn't find any job postings matching "${searchQuery}". Try adjusting your search or filter criteria.`
                     : "Try adjusting your search or filter criteria."}
                 </p>
-                <Button variant="outline" onClick={clearFilters} className="mt-4">
+                <Button variant="outline" onClick={clearFilters} className="mt-6 border-primary/20 hover:bg-primary/5">
                   Clear All Filters
                 </Button>
               </CardContent>
@@ -240,24 +244,34 @@ export default function JobsPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-secondary/30 py-16 lg:py-20">
-        <div className="container mx-auto px-4 lg:px-8">
-          <div className="mx-auto max-w-3xl text-center">
-            <h2 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-              Looking to Hire?
-            </h2>
-            <p className="mt-4 text-muted-foreground">
-              Partner with us to find the best talent for your organization. Our recruitment experts are here to help.
-            </p>
-            <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <Button size="lg" asChild>
-                <Link href="/admin/jobs">Post a Job Opening</Link>
-              </Button>
-              <Button size="lg" variant="outline" asChild>
-                <Link href="/services#recruitment">Learn About Our Services</Link>
-              </Button>
-            </div>
-          </div>
+      <section className="py-8 lg:py-10 relative overflow-hidden">
+        <div className="container relative mx-auto px-4 lg:px-8 z-10">
+          <Card className="overflow-hidden border-0 shadow-2xl bg-gradient-to-br from-primary via-primary/90 to-primary/80 text-primary-foreground relative rounded-[2rem]">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.15),transparent_50%)]" />
+            <CardContent className="p-10 md:p-16 lg:p-20 relative z-10">
+              <div className="mx-auto max-w-3xl text-center">
+                <h2 className="text-4xl font-extrabold tracking-tight md:text-5xl lg:text-6xl drop-shadow-sm">
+                  Looking to Hire?
+                </h2>
+                <p className="mt-6 text-lg text-primary-foreground/90 md:text-xl max-w-2xl mx-auto font-medium leading-relaxed">
+                  Partner with us to find the best talent for your organization. Our recruitment experts are here to help.
+                </p>
+                <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+                  <Button size="lg" variant="secondary" className="h-14 px-8 text-base font-bold shadow-xl hover:scale-105 transition-transform" asChild>
+                    <Link href="/contact">Contact Us to Hire</Link>
+                  </Button>
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="h-14 px-8 text-base font-bold border-2 border-primary-foreground/40 bg-transparent text-primary-foreground hover:bg-primary-foreground hover:text-primary transition-all hover:scale-105 shadow-lg"
+                    asChild
+                  >
+                    <Link href="/services#recruitment">Learn About Our Services</Link>
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </section>
     </div>

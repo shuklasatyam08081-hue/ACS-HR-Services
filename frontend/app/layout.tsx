@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
+import { ScrollEffects } from '@/components/scroll-effects'
 import './globals.css'
 
 const _geist = Geist({ subsets: ["latin"] });
@@ -47,6 +48,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="font-sans antialiased" suppressHydrationWarning>
+        <ScrollEffects />
         <div className="flex min-h-screen flex-col">
           <Header />
           <main className="flex-1">{children}</main>
