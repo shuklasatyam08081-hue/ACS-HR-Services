@@ -85,7 +85,7 @@ export default function AboutPage() {
               <span className="flex h-2 w-2 rounded-full bg-primary mr-2 animate-pulse"></span>
               About Us
             </div>
-            <h1 className="text-balance text-5xl font-extrabold tracking-tight text-foreground md:text-6xl lg:text-7xl">
+            <h1 className="text-balance text-3xl font-extrabold tracking-tight text-foreground sm:text-5xl md:text-6xl lg:text-7xl">
               Turning <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">Dreams</span> into Reality
             </h1>
             <p className="mt-6 text-pretty text-lg text-muted-foreground md:text-xl leading-relaxed">
@@ -360,16 +360,16 @@ export default function AboutPage() {
         <div className="container relative mx-auto px-4 lg:px-8 z-10">
           <Card className="overflow-hidden border-0 shadow-2xl bg-gradient-to-br from-primary via-primary/90 to-primary/80 text-primary-foreground relative rounded-[2rem]">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.15),transparent_50%)]" />
-            <CardContent className="p-10 md:p-16 lg:p-20 relative z-10">
+            <CardContent className="p-6 sm:p-10 md:p-16 lg:p-20 relative z-10">
               <div className="mx-auto max-w-3xl text-center">
-                <h2 className="text-4xl font-extrabold tracking-tight md:text-5xl lg:text-6xl drop-shadow-sm">
+                <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight drop-shadow-sm">
                   Stay Inspired. Never Stop Creating.
                 </h2>
                 <p className="mt-6 text-lg text-primary-foreground/90 md:text-xl max-w-2xl mx-auto font-medium leading-relaxed">
                   Let&apos;s discuss how our expertise can help your organization achieve its HR goals or find your dream job.
                 </p>
                 <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-                  <Button size="lg" variant="secondary" className="h-14 px-8 text-base font-bold shadow-xl hover:scale-105 transition-transform" asChild>
+                  <Button size="lg" variant="secondary" className="h-14 w-full sm:w-auto px-8 text-base font-bold shadow-xl hover:scale-105 transition-transform" asChild>
                     <Link href="/contact">
                       Contact Us Today
                       <ArrowRight className="ml-2 h-4 w-4" />
@@ -378,7 +378,7 @@ export default function AboutPage() {
                   <Button
                     size="lg"
                     variant="outline"
-                    className="h-14 px-8 text-base font-bold border-2 border-primary-foreground/40 bg-transparent text-primary-foreground hover:bg-primary-foreground hover:text-primary transition-all hover:scale-105 shadow-lg"
+                    className="h-14 w-full sm:w-auto px-8 text-base font-bold border-2 border-primary-foreground/40 bg-transparent text-primary-foreground hover:bg-primary-foreground hover:text-primary transition-all hover:scale-105 shadow-lg"
                     asChild
                   >
                     <Link href="/services">View Our Services</Link>

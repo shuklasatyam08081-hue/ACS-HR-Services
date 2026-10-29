@@ -6,7 +6,7 @@ import dynamic from "next/dynamic"
 import { Users, Briefcase, Shield, ArrowRight, CheckCircle, Building2, Award, Clock, GraduationCap, FileText, Handshake } from "lucide-react"
 
 const TestimonialsCarousel = dynamic(() => import("@/components/testimonials-carousel").then((mod) => mod.TestimonialsCarousel))
-
+const HeroCarousel = dynamic(() => import("@/components/hero-carousel").then((mod) => mod.HeroCarousel))
 const services = [
   {
     title: "Contract Staffing",
@@ -60,37 +60,18 @@ const benefits = [
 export default function HomePage() {
   return (
     <div className="flex flex-col">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-primary/10 via-background to-background py-12 lg:py-16">
+      <section className="relative overflow-hidden bg-gradient-to-b from-primary/10 via-background to-background pt-0 pb-12 lg:pt-0 lg:pb-16">
         <div className="absolute top-0 left-1/2 w-[1000px] h-[500px] bg-primary/20 rounded-full blur-[120px] -translate-x-1/2 -translate-y-1/2 opacity-50 pointer-events-none" />
-        <div className="container relative mx-auto px-4 lg:px-8">
-          <div className="flex flex-col items-center text-center max-w-4xl mx-auto animate-in fade-in zoom-in duration-1000">
-            <div>
-              <div className="inline-flex items-center rounded-full border bg-background/50 backdrop-blur-sm px-4 py-1.5 text-sm font-semibold text-primary mb-6 shadow-sm">
-                <span className="flex h-2 w-2 rounded-full bg-primary mr-2 animate-pulse"></span>
-                Trusted HR Partner Since 2023
-              </div>
-              <h1 className="text-balance text-5xl font-extrabold tracking-tight md:text-6xl lg:text-7xl">
-                Turning <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">Dreams</span> into Reality
-              </h1>
-              <p className="mt-6 text-pretty text-lg text-muted-foreground md:text-xl max-w-2xl mx-auto leading-relaxed">
-                Anshuman Consultancy is a leading job consultancy firm based in India, specializing in connecting talented professionals with reputable companies across various industries.
-              </p>
-              <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-                <Button size="lg" className="h-12 px-8 shadow-lg shadow-primary/30 transition-all hover:scale-105 font-medium" asChild>
-                  <Link href="/contact">
-                    Get Started Today
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-                <Button variant="outline" size="lg" className="h-12 px-8 backdrop-blur-sm bg-background/50 hover:bg-secondary/80 transition-all hover:scale-105 font-medium" asChild>
-                  <Link href="/services">Explore Our Services</Link>
-                </Button>
-              </div>
-            </div>
+        <div className="container relative mx-auto px-4 lg:px-8 flex flex-col">
+          {/* Automatic Sliding Carousel using uploaded images */}
+          <div className="w-full mb-12 animate-in fade-in slide-in-from-bottom-8 duration-1000">
+            <HeroCarousel />
           </div>
+
+
         </div>
       </section>
+
 
       {/* Services Overview */}
       <section className="py-8 lg:py-10 relative">
@@ -235,19 +216,19 @@ export default function HomePage() {
         <div className="container relative mx-auto px-4 lg:px-8 z-10">
           <Card className="overflow-hidden border-0 shadow-2xl bg-gradient-to-br from-primary via-primary/90 to-primary/80 text-primary-foreground relative rounded-[2rem]">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.15),transparent_50%)]" />
-            <CardContent className="p-10 md:p-16 lg:p-20 relative z-10">
+            <CardContent className="p-6 sm:p-10 md:p-16 lg:p-20 relative z-10">
               <div className="mx-auto max-w-3xl text-center">
-                <h2 className="text-4xl font-extrabold tracking-tight md:text-5xl lg:text-6xl drop-shadow-sm">
+                <h2 className="text-2xl font-extrabold tracking-tight sm:text-4xl md:text-5xl drop-shadow-sm">
                   Ready to Transform Your HR?
                 </h2>
                 <p className="mt-6 text-lg text-primary-foreground/90 md:text-xl max-w-2xl mx-auto font-medium leading-relaxed">
                   Let&apos;s discuss how we can help you build a stronger, more efficient workforce. Get a free consultation with our HR experts today.
                 </p>
                 <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-                  <Button size="lg" variant="secondary" className="h-14 px-8 text-base font-bold shadow-xl hover:scale-105 transition-transform" asChild>
+                  <Button size="lg" variant="secondary" className="h-14 w-full sm:w-auto px-8 text-base font-bold shadow-xl hover:scale-105 transition-transform" asChild>
                     <Link href="/contact">Schedule Free Consultation</Link>
                   </Button>
-                  <Button size="lg" variant="outline" className="h-14 px-8 text-base font-bold border-2 border-primary-foreground/40 bg-transparent text-primary-foreground hover:bg-primary-foreground hover:text-primary transition-all hover:scale-105 shadow-lg" asChild>
+                  <Button size="lg" variant="outline" className="h-14 w-full sm:w-auto px-8 text-base font-bold border-2 border-primary-foreground/40 bg-transparent text-primary-foreground hover:bg-primary-foreground hover:text-primary transition-all hover:scale-105 shadow-lg" asChild>
                     <Link href="/register">Register as Job Seeker</Link>
                   </Button>
                 </div>

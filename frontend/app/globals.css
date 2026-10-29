@@ -141,31 +141,255 @@
   width: 0%;
   background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
   border-radius: 0 2px 2px 0;
-  box-shadow: 0 0 8px 1px color-mix(in oklch, var(--primary) 60%, transparent);
+  box-shadow: 0 0 12px 2px color-mix(in oklch, var(--primary) 70%, transparent);
   transition: width 0.05s linear;
 }
 
-/* ─── Scroll Reveal — pure CSS, no JS DOM mutation ─── */
-@supports (animation-timeline: view()) {
-  section {
-    animation: section-reveal linear both;
-    animation-timeline: view();
-    animation-range: entry 0% entry 20%;
-  }
+/* ═══════════════════════════════════════════════
+   PAGE ENTRY ANIMATION
+   Entire page fades + slides up when navigating
+═══════════════════════════════════════════════ */
+main {
+  animation: page-enter 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
 
-  @keyframes section-reveal {
-    from {
-      opacity: 0;
-      transform: translateY(24px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
   }
 }
 
-/* ─── Ambient Floating Orbs ─── */
+/* ═══════════════════════════════════════════════
+   SCROLL-REVEAL  (CSS scroll-timeline)
+   Cards, headings, and list items animate in as
+   they enter the viewport — no JS needed.
+═══════════════════════════════════════════════ */
+@supports (animation-timeline: view()) {
+
+  /* ── Sections ── */
+  section {
+    animation: section-reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 18%;
+  }
+
+  /* ── Cards ── */
+  .card,
+  [class*="Card"] {
+    animation: card-pop linear both;
+    animation-timeline: view();
+    animation-range: entry 5% entry 30%;
+  }
+
+  /* ── Headings ── */
+  h1, h2, h3 {
+    animation: heading-slide linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 22%;
+  }
+
+  /* ── Images ── */
+  img {
+    animation: img-reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 25%;
+  }
+
+  /* ── List items – staggered via nth-child ── */
+  li:nth-child(1)  { animation-delay: 0ms; }
+  li:nth-child(2)  { animation-delay: 60ms; }
+  li:nth-child(3)  { animation-delay: 120ms; }
+  li:nth-child(4)  { animation-delay: 180ms; }
+  li:nth-child(5)  { animation-delay: 240ms; }
+  li:nth-child(6)  { animation-delay: 300ms; }
+
+  li {
+    animation: li-fade linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 28%;
+  }
+}
+
+@keyframes section-reveal {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes card-pop {
+  from { opacity: 0; transform: translateY(32px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)   scale(1); }
+}
+
+@keyframes heading-slide {
+  from { opacity: 0; transform: translateX(-18px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes img-reveal {
+  from { opacity: 0; transform: scale(0.96); filter: blur(4px); }
+  to   { opacity: 1; transform: scale(1);    filter: blur(0); }
+}
+
+@keyframes li-fade {
+  from { opacity: 0; transform: translateX(-12px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ═══════════════════════════════════════════════
+   INTERACTIVE HOVER EFFECTS
+═══════════════════════════════════════════════ */
+
+/* ── Card lift + glow on hover ── */
+.card,
+[class*="Card"] {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.3s ease,
+              border-color 0.3s ease;
+  will-change: transform;
+}
+.card:hover,
+[class*="Card"]:hover {
+  transform: translateY(-6px) scale(1.012);
+  box-shadow: 0 20px 50px -12px color-mix(in oklch, var(--primary) 25%, transparent),
+              0 0 0 1px color-mix(in oklch, var(--primary) 15%, transparent);
+}
+
+/* ── Animated underline on nav links ── */
+nav a {
+  position: relative;
+  transition: color 0.25s ease;
+}
+nav a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  border-radius: 2px;
+  transition: width 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+              left 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+nav a:hover::after,
+nav a[aria-current="page"]::after {
+  width: 100%;
+  left: 0;
+}
+
+/* ── Button shimmer on hover ── */
+button,
+[role="button"],
+a.btn,
+.btn {
+  position: relative;
+  overflow: hidden;
+}
+button::before,
+[role="button"]::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.18),
+    transparent
+  );
+  transform: skewX(-20deg);
+  transition: left 0s;
+  pointer-events: none;
+  border-radius: inherit;
+}
+button:hover::before,
+[role="button"]:hover::before {
+  left: 150%;
+  transition: left 0.55s ease;
+}
+
+/* ── Icon spin on card hover ── */
+.group:hover svg {
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform: rotate(8deg) scale(1.15);
+}
+
+/* ── Section divider animated gradient line ── */
+.section-divider {
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--primary) 30%,
+    var(--accent) 70%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: divider-sweep 3s linear infinite;
+  border-radius: 2px;
+  margin: 0 auto;
+}
+@keyframes divider-sweep {
+  0%   { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+
+/* ── Stat number count-up shimmer ── */
+.stat-value,
+[class*="stat"] p:first-child,
+.acs-stat-val {
+  background: linear-gradient(
+    90deg,
+    var(--foreground) 0%,
+    var(--primary) 40%,
+    var(--accent) 60%,
+    var(--foreground) 100%
+  );
+  background-size: 250% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: stat-shimmer 4s linear infinite;
+}
+@keyframes stat-shimmer {
+  0%   { background-position: 0% center; }
+  100% { background-position: 250% center; }
+}
+
+/* ── Pulse ring on active nav link ── */
+nav a[aria-current="page"],
+nav a.active {
+  color: var(--primary);
+}
+
+/* ── Image hover zoom ── */
+img {
+  transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              filter 0.45s ease,
+              box-shadow 0.45s ease;
+}
+img:hover {
+  transform: scale(1.04);
+  filter: brightness(1.05) saturate(1.1);
+}
+
+/* ─── Smooth scroll for the whole page ─── */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ═══════════════════════════════════════════════
+   AMBIENT FLOATING ORBS
+═══════════════════════════════════════════════ */
 .ambient-orbs {
   position: fixed;
   inset: 0;
@@ -177,46 +401,169 @@
 .orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.18;
+  filter: blur(90px);
+  opacity: 0.15;
   animation: orb-drift linear infinite;
 }
 
 .orb-1 {
-  width: 420px;
-  height: 420px;
+  width: 500px;
+  height: 500px;
   background: radial-gradient(circle, var(--primary), transparent 70%);
-  top: -10%;
-  left: -10%;
-  animation-duration: 22s;
+  top: -15%;
+  left: -12%;
+  animation-duration: 24s;
   animation-delay: 0s;
 }
 
 .orb-2 {
-  width: 340px;
-  height: 340px;
+  width: 380px;
+  height: 380px;
   background: radial-gradient(circle, var(--accent), transparent 70%);
-  bottom: 10%;
-  right: -8%;
-  animation-duration: 28s;
-  animation-delay: -8s;
+  bottom: 8%;
+  right: -10%;
+  animation-duration: 30s;
+  animation-delay: -9s;
 }
 
 .orb-3 {
-  width: 260px;
-  height: 260px;
+  width: 280px;
+  height: 280px;
   background: radial-gradient(circle, var(--primary), transparent 70%);
   top: 40%;
-  left: 50%;
-  animation-duration: 35s;
-  animation-delay: -14s;
+  left: 48%;
+  animation-duration: 38s;
+  animation-delay: -16s;
 }
 
 @keyframes orb-drift {
-  0%   { transform: translate(0px, 0px) scale(1); }
-  25%  { transform: translate(40px, -30px) scale(1.05); }
-  50%  { transform: translate(-20px, 50px) scale(0.95); }
-  75%  { transform: translate(30px, 20px) scale(1.08); }
-  100% { transform: translate(0px, 0px) scale(1); }
+  0%   { transform: translate(0px, 0px)   scale(1); }
+  25%  { transform: translate(50px, -35px) scale(1.06); }
+  50%  { transform: translate(-25px, 55px) scale(0.94); }
+  75%  { transform: translate(35px, 22px)  scale(1.09); }
+  100% { transform: translate(0px, 0px)   scale(1); }
 }
 
+/* ═══════════════════════════════════════════════
+   CURSOR SPOTLIGHT  (subtle glow follows mouse)
+═══════════════════════════════════════════════ */
+.cursor-spotlight {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    color-mix(in oklch, var(--primary) 8%, transparent) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 1;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s ease;
+  will-change: transform;
+}
+
+/* ═══════════════════════════════════════════════
+   STAGGER GRID CHILDREN — for service/feature grids
+═══════════════════════════════════════════════ */
+@supports (animation-timeline: view()) {
+  .grid > *:nth-child(1) { animation-delay: 0ms; }
+  .grid > *:nth-child(2) { animation-delay: 80ms; }
+  .grid > *:nth-child(3) { animation-delay: 160ms; }
+  .grid > *:nth-child(4) { animation-delay: 240ms; }
+  .grid > *:nth-child(5) { animation-delay: 320ms; }
+  .grid > *:nth-child(6) { animation-delay: 400ms; }
+
+  .grid > * {
+    animation: card-pop linear both;
+    animation-timeline: view();
+    animation-range: entry 5% entry 32%;
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   FOOTER LINKS  — smooth underline sweep
+═══════════════════════════════════════════════ */
+footer a {
+  position: relative;
+  transition: color 0.25s ease;
+}
+footer a::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--primary);
+  transition: width 0.3s ease;
+}
+footer a:hover::after { width: 100%; }
+
+/* ═══════════════════════════════════════════════
+   HEADER SCROLL SHADOW  (handled via JS class)
+═══════════════════════════════════════════════ */
+header {
+  transition: box-shadow 0.3s ease, background-color 0.3s ease;
+}
+header.scrolled {
+  box-shadow: 0 4px 24px -4px rgba(0,0,0,0.12);
+}
+
+/* ═══════════════════════════════════════════════
+   FOCUS VISIBLE — accessibility ring
+═══════════════════════════════════════════════ */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+  border-radius: 4px;
+  transition: outline-offset 0.2s ease;
+}
+
+
+
+
+/* ===============================================
+   MOBILE RESPONSIVENESS FIXES
+=============================================== */
+
+/* Prevent horizontal overflow */
+html, body { overflow-x: hidden; max-width: 100vw; }
+
+/* Smooth touch experience */
+* { -webkit-tap-highlight-color: transparent; }
+html { -webkit-text-size-adjust: 100%; touch-action: manipulation; }
+
+/* Touch devices: disable mouse-only effects */
+@media (hover: none) and (pointer: coarse) {
+  .cursor-spotlight { display: none !important; }
+  img:hover { transform: none !important; filter: none !important; }
+  .card:hover, [class*='Card']:hover { transform: none !important; }
+  button, a, [role='button'] { min-height: 44px; }
+}
+
+/* Shrink orbs on small screens */
+@media (max-width: 640px) {
+  .orb-1 { width: 200px !important; height: 200px !important; }
+  .orb-2 { width: 160px !important; height: 160px !important; }
+  .orb-3 { width: 120px !important; height: 120px !important; }
+}
+
+/* Fluid headings on tiny screens */
+@media (max-width: 480px) {
+  h1 { font-size: clamp(1.75rem, 9vw, 3rem) !important; line-height: 1.15 !important; }
+  h2 { font-size: clamp(1.35rem, 7vw, 2.25rem) !important; line-height: 1.2 !important; }
+}
+
+/* Select dropdowns: full width on mobile */
+@media (max-width: 640px) {
+  [data-radix-select-trigger] { width: 100% !important; min-width: 0 !important; }
+}
+
+/* Safe-area for notched phones */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  body { padding-bottom: env(safe-area-inset-bottom); }
+}

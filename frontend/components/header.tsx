@@ -53,7 +53,7 @@ export function Header() {
             />
             <div className="hidden flex-col sm:flex">
               <span className="text-lg font-bold leading-tight text-foreground">ACS HR Services</span>
-              <span className="text-xs text-muted-foreground">Turning Dreams into Reality</span>
+
             </div>
           </Link>
 
@@ -128,7 +128,7 @@ export function Header() {
               />
               <div className="flex flex-col">
                 <span className="text-base font-bold leading-tight">ACS HR Services</span>
-                <span className="text-xs text-muted-foreground">Turning Dreams into Reality</span>
+
               </div>
             </Link>
             <button

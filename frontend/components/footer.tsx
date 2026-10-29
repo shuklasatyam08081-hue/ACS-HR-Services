@@ -34,7 +34,7 @@ const socialLinks = [
 export function Footer() {
   return (
     <footer className="border-t bg-secondary/30">
-      <div className="container mx-auto px-4 py-12 lg:px-8 lg:py-16">
+      <div className="container mx-auto px-4 py-10 lg:px-8 lg:py-16">
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-5">
           {/* Company Info */}
           <div className="lg:col-span-2">
@@ -55,12 +55,12 @@ export function Footer() {
               A leading job consultancy firm based in India, specializing in connecting talented professionals with reputable companies across various industries. Empowering businesses with tailored strategies and innovative solutions.
             </p>
             <div className="mt-6 flex flex-col gap-3">
-              <a href="tel:+919120335555" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground">
-                <Phone className="h-4 w-4" />
+              <a href="tel:+919120335555" className="flex items-start gap-2 text-xs sm:text-sm text-muted-foreground hover:text-foreground break-all">
+                <Phone className="h-4 w-4 shrink-0 mt-0.5" />
                 +91 91203 35555 / 63931 90171 / 97111 89713
               </a>
-              <a href="mailto:amitacs2023@gmail.com" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground">
-                <Mail className="h-4 w-4" />
+              <a href="mailto:amitacs2023@gmail.com" className="flex items-start gap-2 text-xs sm:text-sm text-muted-foreground hover:text-foreground break-all">
+                <Mail className="h-4 w-4 shrink-0 mt-0.5" />
                 amitacs2023@gmail.com / acs02.2016@gmail.com
               </a>
               <div className="flex items-start gap-2 text-sm text-muted-foreground">

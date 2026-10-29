@@ -51,7 +51,7 @@ export default function ContactPage() {
               <span className="flex h-2 w-2 rounded-full bg-primary mr-2 animate-pulse"></span>
               Contact Us
             </div>
-            <h1 className="text-balance text-5xl font-extrabold tracking-tight text-foreground md:text-6xl lg:text-7xl">
+            <h1 className="text-balance text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-foreground">
               Let&apos;s Connect With Us!
             </h1>
             <p className="mt-6 text-pretty text-lg text-muted-foreground md:text-xl leading-relaxed">
@@ -74,7 +74,7 @@ export default function ContactPage() {
                   <h3 className="text-xl font-bold text-foreground">{info.label}</h3>
                   <a
                     href={info.href}
-                    className="mt-3 block text-lg font-bold text-primary transition-colors hover:text-accent group-hover:underline underline-offset-4"
+                    className="mt-3 block text-lg font-bold text-primary transition-colors hover:text-accent group-hover:underline underline-offset-4 break-all sm:break-normal px-2"
                     target={info.href?.startsWith("https") ? "_blank" : undefined}
                     rel={info.href?.startsWith("https") ? "noopener noreferrer" : undefined}
                   >

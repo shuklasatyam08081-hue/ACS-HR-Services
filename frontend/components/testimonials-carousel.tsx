@@ -45,6 +45,7 @@ interface TestimonialsCarouselProps {
 export function TestimonialsCarousel({ className }: TestimonialsCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
+  const [touchStart, setTouchStart] = useState<number | null>(null)
 
   useEffect(() => {
     if (isPaused) return
@@ -56,11 +57,30 @@ export function TestimonialsCarousel({ className }: TestimonialsCarouselProps) {
     return () => clearInterval(interval)
   }, [isPaused])
 
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientX)
+  }
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStart === null) return
+    const diff = touchStart - e.changedTouches[0].clientX
+    if (Math.abs(diff) > 40) {
+      if (diff > 0) {
+        setCurrentIndex((prev) => (prev + 1) % testimonials.length)
+      } else {
+        setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length)
+      }
+    }
+    setTouchStart(null)
+  }
+
   return (
     <div
-      className={cn("relative", className)}
+      className={cn("relative select-none", className)}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
     >
       <div className="overflow-hidden">
         <div

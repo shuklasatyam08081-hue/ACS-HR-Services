@@ -18,7 +18,7 @@ export default function RegistrationPage() {
               <FileText className="h-4 w-4 text-primary" />
               <span className="text-sm font-semibold text-primary">Job Seeker Registration</span>
             </div>
-            <h1 className="text-balance text-4xl font-extrabold tracking-tight text-foreground md:text-5xl lg:text-6xl">
+            <h1 className="text-balance text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground">
               Register with ACS HR Services
             </h1>
             <p className="max-w-2xl text-lg text-muted-foreground md:text-xl leading-relaxed mx-auto">
@@ -39,7 +39,7 @@ export default function RegistrationPage() {
 
             {/* Sidebar Benefits */}
             <div className="space-y-6">
-              <div className="rounded-2xl bg-gradient-to-br from-background to-secondary/20 p-8 shadow-lg hover:shadow-xl transition-shadow border-0">
+              <div className="rounded-2xl bg-gradient-to-br from-background to-secondary/20 p-6 sm:p-8 shadow-lg hover:shadow-xl transition-shadow border-0">
                 <h3 className="text-xl font-bold text-foreground mb-6">Why Register with Us?</h3>
                 <ul className="space-y-4">
                   <li className="flex gap-3">

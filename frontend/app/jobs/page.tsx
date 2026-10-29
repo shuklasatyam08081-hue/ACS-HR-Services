@@ -116,10 +116,10 @@ export default function JobsPage() {
               <span className="flex h-2 w-2 rounded-full bg-primary mr-2 animate-pulse"></span>
               Career Opportunities
             </div>
-            <h1 className="text-balance text-5xl font-extrabold tracking-tight text-foreground md:text-6xl lg:text-7xl">
+            <h1 className="text-balance text-3xl font-extrabold tracking-tight text-foreground sm:text-5xl md:text-6xl lg:text-7xl">
               Find Your Next Opportunity
             </h1>
-            <p className="mt-6 text-pretty text-lg text-muted-foreground md:text-xl leading-relaxed">
+            <p className="mt-6 text-pretty text-base text-muted-foreground md:text-xl leading-relaxed">
               Browse current job openings from our clients across various industries and locations.
             </p>
           </div>
@@ -143,9 +143,9 @@ export default function JobsPage() {
             </div>
 
             {/* Filter Dropdowns */}
-            <div className="flex flex-wrap gap-3">
+            <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-3">
               <Select value={selectedDepartment} onValueChange={setSelectedDepartment}>
-                <SelectTrigger className="w-[180px]">
+                <SelectTrigger className="w-full sm:w-[180px]">
                   <SelectValue placeholder="Department" />
                 </SelectTrigger>
                 <SelectContent>
@@ -158,7 +158,7 @@ export default function JobsPage() {
               </Select>
 
               <Select value={selectedType} onValueChange={setSelectedType}>
-                <SelectTrigger className="w-[140px]">
+                <SelectTrigger className="w-full sm:w-[140px]">
                   <SelectValue placeholder="Job Type" />
                 </SelectTrigger>
                 <SelectContent>
@@ -171,7 +171,7 @@ export default function JobsPage() {
               </Select>
 
               <Select value={selectedLocation} onValueChange={setSelectedLocation}>
-                <SelectTrigger className="w-[180px]">
+                <SelectTrigger className="w-full sm:w-[180px] col-span-2 sm:col-span-1">
                   <SelectValue placeholder="Location" />
                 </SelectTrigger>
                 <SelectContent>
@@ -184,7 +184,7 @@ export default function JobsPage() {
               </Select>
 
               {hasActiveFilters && (
-                <Button variant="ghost" size="icon" onClick={clearFilters}>
+                <Button variant="ghost" size="icon" onClick={clearFilters} className="col-span-2 sm:col-span-1 w-full sm:w-auto">
                   <X className="h-4 w-4" />
                   <span className="sr-only">Clear filters</span>
                 </Button>
@@ -248,22 +248,22 @@ export default function JobsPage() {
         <div className="container relative mx-auto px-4 lg:px-8 z-10">
           <Card className="overflow-hidden border-0 shadow-2xl bg-gradient-to-br from-primary via-primary/90 to-primary/80 text-primary-foreground relative rounded-[2rem]">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.15),transparent_50%)]" />
-            <CardContent className="p-10 md:p-16 lg:p-20 relative z-10">
+            <CardContent className="p-6 sm:p-10 md:p-16 lg:p-20 relative z-10">
               <div className="mx-auto max-w-3xl text-center">
-                <h2 className="text-4xl font-extrabold tracking-tight md:text-5xl lg:text-6xl drop-shadow-sm">
+                <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight drop-shadow-sm">
                   Looking to Hire?
                 </h2>
                 <p className="mt-6 text-lg text-primary-foreground/90 md:text-xl max-w-2xl mx-auto font-medium leading-relaxed">
                   Partner with us to find the best talent for your organization. Our recruitment experts are here to help.
                 </p>
                 <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-                  <Button size="lg" variant="secondary" className="h-14 px-8 text-base font-bold shadow-xl hover:scale-105 transition-transform" asChild>
+                  <Button size="lg" variant="secondary" className="h-14 w-full sm:w-auto px-8 text-base font-bold shadow-xl hover:scale-105 transition-transform" asChild>
                     <Link href="/contact">Contact Us to Hire</Link>
                   </Button>
                   <Button
                     size="lg"
                     variant="outline"
-                    className="h-14 px-8 text-base font-bold border-2 border-primary-foreground/40 bg-transparent text-primary-foreground hover:bg-primary-foreground hover:text-primary transition-all hover:scale-105 shadow-lg"
+                    className="h-14 w-full sm:w-auto px-8 text-base font-bold border-2 border-primary-foreground/40 bg-transparent text-primary-foreground hover:bg-primary-foreground hover:text-primary transition-all hover:scale-105 shadow-lg"
                     asChild
                   >
                     <Link href="/services#recruitment">Learn About Our Services</Link>

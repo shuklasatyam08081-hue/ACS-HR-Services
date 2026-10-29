@@ -38,7 +38,7 @@ const registrationSchema = z.object({
   companyName: z.string().optional(),
   designation: z.string().optional(),
   currentSalary: z.string().optional(),
-  expectedSalary: z.string().optional(),
+  expectedSalary: z.string().min(1, "Expected salary is required"),
   noticePeriod: z.string().optional(),
   education: z.string().min(1, "Education details are required"),
   jobPreference: z.string().min(1, "Please specify job preference"),
@@ -70,7 +70,7 @@ export function JobSeekerRegistrationForm() {
     trigger,
   } = useForm<RegistrationFormData>({
     resolver: zodResolver(registrationSchema),
-    mode: "onChange",
+    mode: "onTouched",
   })
 
   const formValues = watch()
@@ -84,7 +84,7 @@ export function JobSeekerRegistrationForm() {
       if (savedData) {
         const parsed = JSON.parse(savedData)
         Object.keys(parsed).forEach((key) => {
-          setValue(key as keyof RegistrationFormData, parsed[key], { shouldValidate: true })
+          setValue(key as keyof RegistrationFormData, parsed[key], { shouldValidate: false, shouldDirty: false, shouldTouch: false })
         })
         if (parsed.permanentAddress && parsed.currentAddress && parsed.permanentAddress === parsed.currentAddress) {
           setSameAsPermanent(true)
@@ -173,7 +173,7 @@ export function JobSeekerRegistrationForm() {
         formData.append("resume", resumeFile)
       }
 
-      const response = await fetch("http://localhost:5001/api/register", {
+      const response = await fetch("/api/register", {
         method: "POST",
         body: formData,
         // Don't set Content-Type — browser sets it with boundary for FormData
